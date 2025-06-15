@@ -2494,18 +2494,42 @@
                     </button>
                 </div>
                 
-                <div class="floating-card">
-                    <div class="audio-container">
-                        <div class="call-timer">23:15</div>
-                        <div class="audio-avatar">
-                            <i class="fas fa-user"></i>
+                <div class="floating-card" style="padding: var(--space-3); position: relative;">
+                    <div class="call-timer" style="position: absolute; top: var(--space-4); right: var(--space-4); background: rgba(37, 99, 235, 0.9); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; z-index: 5;">23:15</div>
+                    
+                    <!-- Two Equal Height Blocks -->
+                    <div style="display: flex; flex-direction: column; gap: var(--space-3); height: 100%;">
+                        <!-- Top Block - Carlos -->
+                        <div style="background: var(--gradient-primary); border-radius: var(--radius-xl); flex: 1; display: flex; align-items: center; justify-content: center; color: white; position: relative; overflow: hidden; min-height: 180px;">
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3);">
+                                <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; animation: pulse 2s infinite;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: var(--space-1);">Carlos Rodriguez</div>
+                                    <div style="font-size: 0.625rem; opacity: 0.9;">🇪🇸 Barcelona, Spain</div>
+                                    <div style="font-size: 0.5rem; opacity: 0.8;">Speaking...</div>
+                                </div>
+                            </div>
                         </div>
-                        <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: var(--space-1);">Carlos Rodriguez</div>
-                        <div style="font-size: 0.625rem; opacity: 0.8;">Native Spanish Speaker</div>
-                        <div style="font-size: 0.625rem; opacity: 0.8;">🇪🇸 Barcelona, Spain</div>
+                        
+                        <!-- Bottom Block - You -->
+                        <div style="background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%); border-radius: var(--radius-xl); flex: 1; display: flex; align-items: center; justify-content: center; color: white; position: relative; overflow: hidden; min-height: 180px;">
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3);">
+                                <div style="width: 56px; height: 56px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; animation: pulse 2s infinite 0.5s;">
+                                    😊
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: var(--space-1);">You</div>
+                                    <div style="font-size: 0.625rem; opacity: 0.9;">🇺🇸 Boston, USA</div>
+                                    <div style="font-size: 0.5rem; opacity: 0.8;">Listening...</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="video-controls">
+                    <!-- Floating Call Controls -->
+                    <div style="position: absolute; bottom: var(--space-4); left: 50%; transform: translateX(-50%); display: flex; gap: var(--space-3); z-index: 10;">
                         <div class="video-control control-mute">
                             <i class="fas fa-microphone"></i>
                         </div>
@@ -2513,35 +2537,236 @@
                             <i class="fas fa-phone-slash"></i>
                         </div>
                         <div class="video-control control-camera">
-                            <i class="fas fa-volume-up"></i>
+                            <i class="fas fa-video"></i>
                         </div>
-                    </div>
-                    
-                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-3);">
-                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2);">
-                            <i class="fas fa-microphone"></i>
-                            Conversation Topics
-                        </div>
-                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-1);">
-                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem;">Food & Culture</span>
-                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem;">Travel</span>
-                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem;">Daily Life</span>
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; gap: var(--space-2);">
-                        <button class="button button-secondary" style="flex: 1;">
-                            <i class="fas fa-comment"></i>
-                            Notes
-                        </button>
-                        <button class="button button-secondary" style="flex: 1;">
-                            <i class="fas fa-lightbulb"></i>
-                            Icebreaker
-                        </button>
                     </div>
                 </div>
             </div>
-            <div class="screen-title">Audio Call</div>
+            <div class="screen-title">Audio Call - Equal Heights</div>
+        </div>
+
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Connected</div>
+                    <button class="nav-button">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="text-align: center; margin-bottom: var(--space-4);">
+                        <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; margin: 0 auto var(--space-3); box-shadow: var(--shadow-lg);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-1); color: var(--gray-900);">Maria Santos</div>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-1); margin-bottom: var(--space-2);">
+                            <i class="fas fa-circle" style="color: var(--success); font-size: 0.375rem;"></i>
+                            <span style="font-size: 0.625rem; color: var(--success); font-weight: 600;">Connected</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Premium Blurred Content -->
+                    <div style="position: relative;">
+                        <div class="premium-blur">
+                            <!-- Location -->
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                                <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Location</div>
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">🇪🇸 Madrid, Spain</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Skill Level -->
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                                <div style="width: 32px; height: 32px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Skill Level</div>
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Native Spanish Speaker</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Personality -->
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                                <div style="width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                    <i class="fas fa-smile"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Personality</div>
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Friendly, Patient, Outgoing</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Hobbies -->
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                                <div style="width: 32px; height: 32px; background: var(--error); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Hobbies</div>
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Travel, Cooking, Photography</div>
+                                </div>
+                            </div>
+                            
+                            <!-- College -->
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                                <div style="width: 32px; height: 32px; background: var(--primary-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Education</div>
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Universidad Complutense Madrid</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Gender -->
+                            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                                <div style="width: 32px; height: 32px; background: var(--gray-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                    <i class="fas fa-venus"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Gender</div>
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Female</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Premium Overlay -->
+                        <div class="premium-overlay">
+                            <div style="text-align: center; background: white; padding: var(--space-4); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); max-width: 200px;">
+                                <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">👑</div>
+                                <div style="font-size: 0.875rem; font-weight: 700; margin-bottom: var(--space-1); color: var(--gray-900);">Premium Required</div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-3); line-height: 1.4;">Unlock detailed profile information to get to know your language partner better</div>
+                                <button style="background: var(--secondary); color: white; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 0.625rem; font-weight: 600; width: 100%;">
+                                    <i class="fas fa-crown"></i>
+                                    Upgrade Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Connected User Profile</div>
+        </div>
+
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Connected</div>
+                    <button class="nav-button">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="text-align: center; margin-bottom: var(--space-4);">
+                        <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; margin: 0 auto var(--space-3); box-shadow: var(--shadow-lg);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-1); color: var(--gray-900);">Maria Santos</div>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-1); margin-bottom: var(--space-2);">
+                            <i class="fas fa-circle" style="color: var(--success); font-size: 0.375rem;"></i>
+                            <span style="font-size: 0.625rem; color: var(--success); font-weight: 600;">Connected</span>
+                        </div>
+                        <div style="background: var(--secondary); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.5rem; font-weight: 600; display: inline-flex; align-items: center; gap: var(--space-1);">
+                            <i class="fas fa-crown"></i>
+                            Premium View
+                        </div>
+                    </div>
+                    
+                    <!-- Clear Premium Content -->
+                    <div>
+                        <!-- Location -->
+                        <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                            <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Location</div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">🇪🇸 Madrid, Spain</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Skill Level -->
+                        <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                            <div style="width: 32px; height: 32px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Skill Level</div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Native Spanish Speaker</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Personality -->
+                        <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                            <div style="width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                <i class="fas fa-smile"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Personality</div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Friendly, Patient, Outgoing</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hobbies -->
+                        <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                            <div style="width: 32px; height: 32px; background: var(--error); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Hobbies</div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Travel, Cooking, Photography</div>
+                            </div>
+                        </div>
+                        
+                        <!-- College -->
+                        <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                            <div style="width: 32px; height: 32px; background: var(--primary-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Education</div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Universidad Complutense Madrid</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Gender -->
+                        <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: var(--space-2);">
+                            <div style="width: 32px; height: 32px; background: var(--gray-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                <i class="fas fa-venus"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.625rem; color: var(--gray-500); margin-bottom: var(--space-1);">Gender</div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">Female</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="screen-title">Premium User Profile View</div>
         </div>
 
         <!-- 16. Chat Interface -->
@@ -3599,11 +3824,11 @@
                     </div>
                     
                     <!-- Summary -->
-                    <div style="background: var(--primary); color: white; border-radius: var(--radius-lg); padding: var(--space-3); margin-top: var(--space-4); text-align: center;">
+                    <!-- <div style="background: var(--primary); color: white; border-radius: var(--radius-lg); padding: var(--space-3); margin-top: var(--space-4); text-align: center;">
                         <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">Total Spent</div>
                         <div style="font-size: 1.25rem; font-weight: 700;">₹1,044</div>
                         <div style="font-size: 0.5rem; opacity: 0.8;">Since joining Linguviq Plus</div>
-                    </div>
+                    </div> -->
                     
                     <button class="button button-secondary" style="margin-top: var(--space-4);">
                         <i class="fas fa-file-download"></i>
@@ -3613,6 +3838,979 @@
             </div>
             <div class="screen-title">Billing History</div>
         </div>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Linguviq App - Additional Screens</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            <style>
+                :root {
+                    /* Single Blue Gradient Background */
+                    --gradient-bg: linear-gradient(135deg, #102056 0%, #0e2955 100%);
+                    --gradient-primary: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+                    --gradient-light: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+        
+                    /* Colors */
+                    --primary: #2563EB;
+                    --primary-light: #3B82F6;
+                    --primary-dark: #1D4ED8;
+                    --secondary: #F59E0B;
+                    --success: #10B981;
+                    --error: #EF4444;
+                    --warning: #F59E0B;
+        
+                    /* Neutrals */
+                    --white: #FFFFFF;
+                    --gray-50: #F9FAFB;
+                    --gray-100: #F3F4F6;
+                    --gray-200: #E5E7EB;
+                    --gray-300: #D1D5DB;
+                    --gray-400: #9CA3AF;
+                    --gray-500: #6B7280;
+                    --gray-600: #4B5563;
+                    --gray-700: #374151;
+                    --gray-800: #1F2937;
+                    --gray-900: #111827;
+        
+                    /* Shadows */
+                    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                    --shadow-floating: 0 20px 40px -8px rgba(0, 0, 0, 0.2);
+        
+                    /* Compact Spacing */
+                    --space-1: 0.25rem;  /* 4px */
+                    --space-2: 0.5rem;   /* 8px */
+                    --space-3: 0.75rem;  /* 12px */
+                    --space-4: 1rem;     /* 16px */
+                    --space-5: 1.25rem;  /* 20px */
+                    --space-6: 1.5rem;   /* 24px */
+        
+                    /* Border Radius */
+                    --radius-sm: 0.25rem;
+                    --radius-md: 0.375rem;
+                    --radius-lg: 0.5rem;
+                    --radius-xl: 0.75rem;
+                    --radius-2xl: 1rem;
+                    --radius-3xl: 1.5rem;
+                    --radius-full: 9999px;
+        
+                    /* Typography */
+                    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                }
+                
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                body {
+                    font-family: var(--font-family);
+                    background: white;
+                    color: var(--gray-900);
+                    line-height: 1.4;
+                    padding: var(--space-5);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    min-height: 100vh;
+                }
+                
+                h1 {
+                    color: var(--primary);
+                    font-size: 1.75rem;
+                    font-weight: 700;
+                    margin-bottom: var(--space-6);
+                    text-align: center;
+                    letter-spacing: -0.025em;
+                }
+                
+                .screens-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: var(--space-6);
+                    max-width: 1400px;
+                    width: 100%;
+                }
+                
+                .screen {
+                    width: 280px;
+                    height: 580px;
+                    border-radius: var(--radius-3xl);
+                    overflow: hidden;
+                    position: relative;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    justify-self: center;
+                    box-shadow: var(--shadow-floating);
+                }
+                
+                .screen:hover {
+                    transform: translateY(-4px) scale(1.01);
+                }
+                
+                .screen-content {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    background: var(--gradient-bg);
+                    position: relative;
+                }
+                
+                .status-bar {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: var(--space-3) var(--space-4) var(--space-2) var(--space-4);
+                    font-size: 0.75rem;
+                    color: white;
+                    font-weight: 600;
+                }
+                
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 var(--space-4) var(--space-3) var(--space-4);
+                }
+                
+                .logo {
+                    font-weight: 700;
+                    font-size: 1rem;
+                    color: white;
+                    letter-spacing: -0.025em;
+                }
+                
+                .nav-button {
+                    background: rgba(255, 255, 255, 0.2);
+                    border: none;
+                    color: white;
+                    font-size: 0.75rem;
+                    border-radius: var(--radius-lg);
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    backdrop-filter: blur(4px);
+                    transition: all 0.2s ease;
+                    cursor: pointer;
+                }
+                
+                .nav-button:hover {
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(1.05);
+                }
+                
+                .floating-card {
+                    background: rgba(255, 255, 255, 0.98);
+                    backdrop-filter: blur(16px);
+                    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+                    margin: var(--space-2) var(--space-3) 0 var(--space-3);
+                    padding: var(--space-4);
+                    box-shadow: var(--shadow-xl);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    flex: 1;
+                    overflow-y: auto;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+                
+                .floating-card::-webkit-scrollbar {
+                    display: none;
+                }
+                
+                .page-title {
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    margin-bottom: var(--space-2);
+                    color: var(--gray-900);
+                    letter-spacing: -0.025em;
+                }
+                
+                .page-subtitle {
+                    font-size: 0.75rem;
+                    margin-bottom: var(--space-4);
+                    color: var(--gray-600);
+                    line-height: 1.5;
+                }
+                
+                .button {
+                    background: var(--gradient-primary);
+                    color: white;
+                    border: none;
+                    padding: var(--space-3) var(--space-4);
+                    border-radius: var(--radius-full);
+                    font-weight: 600;
+                    font-size: 0.75rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: var(--space-2);
+                    box-shadow: var(--shadow-md);
+                    transition: all 0.2s ease;
+                    cursor: pointer;
+                    font-family: var(--font-family);
+                    width: 100%;
+                }
+                
+                .button:hover {
+                    transform: translateY(-1px);
+                    box-shadow: var(--shadow-lg);
+                }
+                
+                .button-secondary {
+                    background: white;
+                    color: var(--primary);
+                    border: 1px solid var(--gray-200);
+                }
+                
+                .button-secondary:hover {
+                    background: var(--gray-50);
+                }
+                
+                .screen-title {
+                    text-align: center;
+                    margin-top: var(--space-2);
+                    font-size: 0.625rem;
+                    color: white;
+                    font-weight: 500;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                }
+        
+                /* Comparison Table */
+                .comparison-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: var(--space-4);
+                }
+        
+                .comparison-table th,
+                .comparison-table td {
+                    padding: var(--space-2);
+                    text-align: center;
+                    border: 1px solid var(--gray-200);
+                    font-size: 0.625rem;
+                }
+        
+                .comparison-table th {
+                    background: var(--gray-50);
+                    font-weight: 600;
+                }
+        
+                .comparison-table .check {
+                    color: var(--success);
+                }
+        
+                .comparison-table .cross {
+                    color: var(--error);
+                }
+        
+                /* Option Items */
+                .option-item {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--space-3);
+                    padding: var(--space-3);
+                    border: 1px solid var(--gray-200);
+                    border-radius: var(--radius-lg);
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+                
+                .option-item:hover {
+                    border-color: var(--primary-light);
+                }
+                
+                .option-item.selected {
+                    border-color: var(--primary);
+                    background: rgba(37, 99, 235, 0.05);
+                }
+                
+                .option-radio {
+                    width: 16px;
+                    height: 16px;
+                    border: 2px solid var(--gray-300);
+                    border-radius: 50%;
+                    position: relative;
+                    flex-shrink: 0;
+                }
+                
+                .option-item.selected .option-radio {
+                    border-color: var(--primary);
+                }
+                
+                .option-item.selected .option-radio::after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 8px;
+                    height: 8px;
+                    background: var(--primary);
+                    border-radius: 50%;
+                }
+                
+                .option-text {
+                    font-size: 0.75rem;
+                    color: var(--gray-700);
+                    line-height: 1.4;
+                }
+        
+                /* Animations */
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                    100% { transform: scale(1); }
+                }
+        
+                @keyframes blink {
+                    0%, 50% { opacity: 1; }
+                    51%, 100% { opacity: 0.3; }
+                }
+            </style>
+        </head>
+        <body>
+            <!-- <h1>Linguviq - Additional Screens</h1> -->
+            
+            <div class="screens-container">
+                
+                <!-- Pricing Plans Screen -->
+                <div class="screen">
+                    <div class="screen-content">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>●●●●●</span>
+                        </div>
+                        
+                        <div class="header">
+                            <button class="nav-button">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <div class="logo">Choose Your Plan</div>
+                            <div style="width: 32px;"></div>
+                        </div>
+                        
+                        <div class="floating-card">
+                            <div class="page-title">Unlock Your Language Journey</div>
+                            <div class="page-subtitle">Choose the perfect plan for your learning goals</div>
+                            
+                            <!-- Payment Frequency Selector -->
+                            <div style="background: var(--gray-50); border-radius: var(--radius-full); padding: var(--space-1); margin-bottom: var(--space-4);">
+                                <div style="display: flex; gap: var(--space-1);">
+                                    <button style="flex: 1; background: white; border: none; padding: var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem; font-weight: 600; color: var(--primary); box-shadow: var(--shadow-sm);">
+                                        Monthly
+                                    </button>
+                                    <button style="flex: 1; background: transparent; border: none; padding: var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem; color: var(--gray-600);">
+                                        Weekly
+                                    </button>
+                                    <button style="flex: 1; background: transparent; border: none; padding: var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem; color: var(--gray-600);">
+                                        Daily
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Pricing Plans -->
+                            <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-4);">
+                                
+                                <!-- Lite Plan -->
+                                <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-3); position: relative;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                        <div>
+                                            <div style="font-size: 0.875rem; font-weight: 700; color: var(--gray-900);">Lite</div>
+                                            <div style="font-size: 0.625rem; color: var(--gray-600);">Perfect for beginners</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="font-size: 1rem; font-weight: 700; color: var(--primary);">₹199</div>
+                                            <div style="font-size: 0.5rem; color: var(--gray-500);">/month</div>
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-700); line-height: 1.4;">
+                                        • 45-minute sessions daily<br>
+                                        • Audio + Video after 15 mins<br>
+                                        • Basic matching filters<br>
+                                        • 15 icebreaker questions
+                                    </div>
+                                </div>
+                                
+                                <!-- Pro Plan - Popular -->
+                                <div style="border: 2px solid var(--primary); border-radius: var(--radius-xl); padding: var(--space-3); position: relative; background: rgba(37, 99, 235, 0.02);">
+                                    <div style="position: absolute; top: -8px; right: var(--space-3); background: var(--primary); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.5rem; font-weight: 600;">
+                                        POPULAR
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                        <div>
+                                            <div style="font-size: 0.875rem; font-weight: 700; color: var(--primary);">Pro</div>
+                                            <div style="font-size: 0.625rem; color: var(--gray-600);">Most chosen plan</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="font-size: 1rem; font-weight: 700; color: var(--primary);">₹349</div>
+                                            <div style="font-size: 0.5rem; color: var(--gray-500);">/month</div>
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-700); line-height: 1.4;">
+                                        • 60-minute unlimited sessions<br>
+                                        • Full video access<br>
+                                        • Advanced matching + filters<br>
+                                        • 30 icebreaker questions<br>
+                                        • Group discussions (45 mins)
+                                    </div>
+                                </div>
+                                
+                                <!-- Ultimate Plan -->
+                                <div style="border: 1px solid var(--secondary); border-radius: var(--radius-xl); padding: var(--space-3); position: relative; background: rgba(245, 158, 11, 0.02);">
+                                    <div style="position: absolute; top: -8px; right: var(--space-3); background: var(--secondary); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.5rem; font-weight: 600;">
+                                        <i class="fas fa-crown"></i> PREMIUM
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                        <div>
+                                            <div style="font-size: 0.875rem; font-weight: 700; color: var(--secondary);">Ultimate</div>
+                                            <div style="font-size: 0.625rem; color: var(--gray-600);">For serious learners</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="font-size: 1rem; font-weight: 700; color: var(--secondary);">₹549</div>
+                                            <div style="font-size: 0.5rem; color: var(--gray-500);">/month</div>
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-700); line-height: 1.4;">
+                                        • 90-minute unlimited sessions<br>
+                                        • Priority matching<br>
+                                        • All 50+ icebreaker questions<br>
+                                        • Detailed profile filters<br>
+                                        • Create & manage groups<br>
+                                        • Session history & analytics
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Feature Comparison Table -->
+                            <div style="margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    <i class="fas fa-list"></i>
+                                    Compare Plans
+                                </div>
+                                
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left; font-size: 0.5rem;">Features</th>
+                                            <th style="font-size: 0.5rem;">Free</th>
+                                            <th style="font-size: 0.5rem;">Lite</th>
+                                            <th style="font-size: 0.5rem;">Pro</th>
+                                            <th style="font-size: 0.5rem;">Ultimate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 0.5rem;">Session Length</td>
+                                            <td style="font-size: 0.5rem;">30 min</td>
+                                            <td style="font-size: 0.5rem;">45 min</td>
+                                            <td style="font-size: 0.5rem;">60 min</td>
+                                            <td style="font-size: 0.5rem;">90 min</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 0.5rem;">Video Calls</td>
+                                            <td><i class="fas fa-times cross"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 0.5rem;">Daily Sessions</td>
+                                            <td style="font-size: 0.5rem;">1</td>
+                                            <td style="font-size: 0.5rem;">3</td>
+                                            <td style="font-size: 0.5rem;">Unlimited</td>
+                                            <td style="font-size: 0.5rem;">Unlimited</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 0.5rem;">Advanced Filters</td>
+                                            <td><i class="fas fa-times cross"></i></td>
+                                            <td><i class="fas fa-times cross"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 0.5rem;">Group Discussions</td>
+                                            <td><i class="fas fa-times cross"></i></td>
+                                            <td><i class="fas fa-times cross"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 0.5rem;">Full Profile Access</td>
+                                            <td><i class="fas fa-times cross"></i></td>
+                                            <td><i class="fas fa-times cross"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                            <td><i class="fas fa-check check"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <button class="button">
+                                <i class="fas fa-crown"></i>
+                                Start with Pro Plan
+                            </button>
+                            
+                            <div style="text-align: center; margin-top: var(--space-2); font-size: 0.5rem; color: var(--gray-500);">
+                                Cancel anytime • 7-day money-back guarantee
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screen-title">Pricing Plans</div>
+                </div>
+        
+                <!-- Safety & Reporting Screen -->
+                <div class="screen">
+                    <div class="screen-content">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>●●●●●</span>
+                        </div>
+                        
+                        <div class="header">
+                            <button class="nav-button">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <div class="logo">Safety & Reporting</div>
+                            <div style="width: 32px;"></div>
+                        </div>
+                        
+                        <div class="floating-card">
+                            <div class="page-title">Report an Issue</div>
+                            <div class="page-subtitle">Help us keep Linguviq safe for everyone</div>
+                            
+                            <!-- Current Session Info -->
+                            <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+                                    <div style="width: 32px; height: 32px; background: var(--error); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.75rem; font-weight: 600; color: var(--error);">Reporting: Carlos Rodriguez</div>
+                                        <div style="font-size: 0.625rem; color: var(--gray-600);">Session: Dec 16, 2024 • 23:15 duration</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Report Reasons -->
+                            <div style="margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    What happened?
+                                </div>
+                                
+                                <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                                    <div class="option-item">
+                                        <div class="option-radio"></div>
+                                        <div class="option-text">Inappropriate language or behavior</div>
+                                    </div>
+                                    <div class="option-item">
+                                        <div class="option-radio"></div>
+                                        <div class="option-text">Harassment or bullying</div>
+                                    </div>
+                                    <div class="option-item selected">
+                                        <div class="option-radio"></div>
+                                        <div class="option-text">Spam or fake profile</div>
+                                    </div>
+                                    <div class="option-item">
+                                        <div class="option-radio"></div>
+                                        <div class="option-text">Inappropriate content sharing</div>
+                                    </div>
+                                    <div class="option-item">
+                                        <div class="option-radio"></div>
+                                        <div class="option-text">Other safety concern</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Additional Details -->
+                            <div style="margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    Additional Details (Optional)
+                                </div>
+                                <textarea style="width: 100%; padding: var(--space-3); border: 1px solid var(--gray-300); border-radius: var(--radius-lg); font-size: 0.75rem; min-height: 60px; resize: vertical; font-family: var(--font-family);" placeholder="Please provide more details about what happened..."></textarea>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4);">
+                                <button class="button" style="background: var(--error);">
+                                    <i class="fas fa-flag"></i>
+                                    Submit Report
+                                </button>
+                                <button class="button button-secondary" style="border-color: var(--error); color: var(--error);">
+                                    <i class="fas fa-ban"></i>
+                                    Block This User
+                                </button>
+                            </div>
+                            
+                            <!-- Safety Resources -->
+                            <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Safety Resources
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-2); background: white; border-radius: var(--radius-lg); cursor: pointer;">
+                                        <div>
+                                            <div style="font-size: 0.625rem; font-weight: 600;">Safety Guidelines</div>
+                                            <div style="font-size: 0.5rem; color: var(--gray-600);">Learn how to stay safe</div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.625rem;"></i>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-2); background: white; border-radius: var(--radius-lg); cursor: pointer;">
+                                        <div>
+                                            <div style="font-size: 0.625rem; font-weight: 600;">Contact Support</div>
+                                            <div style="font-size: 0.5rem; color: var(--gray-600);">Get help from our team</div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.625rem;"></i>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-2); background: white; border-radius: var(--radius-lg); cursor: pointer;">
+                                        <div>
+                                            <div style="font-size: 0.625rem; font-weight: 600;">Emergency Help</div>
+                                            <div style="font-size: 0.5rem; color: var(--gray-600);">Crisis support resources</div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.625rem;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: var(--space-3); font-size: 0.5rem; color: var(--gray-500);">
+                                All reports are reviewed within 24 hours. Your safety is our priority.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screen-title">Safety & Reporting</div>
+                </div>
+        
+                <!-- Connection Issues Screen -->
+                <div class="screen">
+                    <div class="screen-content">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>●●●○○</span>
+                        </div>
+                        
+                        <div class="header">
+                            <button class="nav-button">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div class="logo">Connection Issues</div>
+                            <button class="nav-button">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="floating-card">
+                            <div style="text-align: center; margin-bottom: var(--space-4);">
+                                <div style="width: 80px; height: 80px; background: var(--warning); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; margin: 0 auto var(--space-3); animation: pulse 2s infinite;">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="page-title">Poor Connection Detected</div>
+                                <div class="page-subtitle">We're having trouble maintaining a stable connection with Carlos Rodriguez</div>
+                            </div>
+                            
+                            <!-- Connection Status -->
+                            <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid var(--warning); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+                                    <div style="width: 8px; height: 8px; background: var(--warning); border-radius: 50%; animation: blink 1s infinite;"></div>
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--warning);">Unstable Connection</div>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <span style="font-size: 0.625rem; color: var(--gray-700);">Network Quality:</span>
+                                    <span style="font-size: 0.625rem; font-weight: 600; color: var(--warning);">Poor</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <span style="font-size: 0.625rem; color: var(--gray-700);">Audio Quality:</span>
+                                    <span style="font-size: 0.625rem; font-weight: 600; color: var(--error);">Choppy</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 0.625rem; color: var(--gray-700);">Video Quality:</span>
+                                    <span style="font-size: 0.625rem; font-weight: 600; color: var(--error);">Frozen</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div style="margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    <i class="fas fa-tools"></i>
+                                    Quick Fixes
+                                </div>
+                                
+                                <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                                    <button style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); cursor: pointer; font-family: var(--font-family); width: 100%;">
+                                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                            <div style="width: 24px; height: 24px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                                <i class="fas fa-video-slash"></i>
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 0.75rem; font-weight: 600; text-align: left;">Turn Off Video</div>
+                                                <div style="font-size: 0.5rem; color: var(--gray-600); text-align: left;">Continue with audio only</div>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.625rem;"></i>
+                                    </button>
+                                    
+                                    <button style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); cursor: pointer; font-family: var(--font-family); width: 100%;">
+                                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                            <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                                <i class="fas fa-redo"></i>
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 0.75rem; font-weight: 600; text-align: left;">Reconnect</div>
+                                                <div style="font-size: 0.5rem; color: var(--gray-600); text-align: left;">Try connecting again</div>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.625rem;"></i>
+                                    </button>
+                                    
+                                    <button style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); cursor: pointer; font-family: var(--font-family); width: 100%;">
+                                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                            <div style="width: 24px; height: 24px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                                <i class="fas fa-exchange-alt"></i>
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 0.75rem; font-weight: 600; text-align: left;">Switch to Chat</div>
+                                                <div style="font-size: 0.5rem; color: var(--gray-600); text-align: left;">Continue via text messages</div>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.625rem;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Troubleshooting Tips -->
+                            <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    <i class="fas fa-lightbulb"></i>
+                                    Troubleshooting Tips
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                                    <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem; color: var(--gray-700);">
+                                        <i class="fas fa-check-circle" style="color: var(--success); font-size: 0.5rem;"></i>
+                                        <span>Move closer to your WiFi router</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem; color: var(--gray-700);">
+                                        <i class="fas fa-check-circle" style="color: var(--success); font-size: 0.5rem;"></i>
+                                        <span>Close other apps using internet</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem; color: var(--gray-700);">
+                                        <i class="fas fa-check-circle" style="color: var(--success); font-size: 0.5rem;"></i>
+                                        <span>Switch from WiFi to mobile data</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem; color: var(--gray-700);">
+                                        <i class="fas fa-check-circle" style="color: var(--success); font-size: 0.5rem;"></i>
+                                        <span>Restart your internet connection</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="display: flex; gap: var(--space-2);">
+                                <button class="button" style="flex: 1;">
+                                    <i class="fas fa-redo"></i>
+                                    Try Again
+                                </button>
+                                <button class="button button-secondary" style="flex: 1; background: var(--error); color: white; border-color: var(--error);">
+                                    <i class="fas fa-phone-slash"></i>
+                                    End Call
+                                </button>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: var(--space-3); font-size: 0.5rem; color: var(--gray-500);">
+                                Don't worry! Your session time will be extended due to connection issues.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screen-title">Connection Issues</div>
+                </div>
+        
+                <!-- Referral System Screen -->
+                <div class="screen">
+                    <div class="screen-content">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>●●●●●</span>
+                        </div>
+                        
+                        <div class="header">
+                            <button class="nav-button">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <div class="logo">Refer Friends</div>
+                            <button class="nav-button">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="floating-card">
+                            <div style="text-align: center; margin-bottom: var(--space-4);">
+                                <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">🎁</div>
+                                <div class="page-title">Invite Friends & Earn Rewards</div>
+                                <div class="page-subtitle">Share Linguviq with friends and both of you get amazing benefits!</div>
+                            </div>
+                            
+                            <!-- Reward Summary -->
+                            <div style="background: var(--gradient-primary); color: white; border-radius: var(--radius-xl); padding: var(--space-4); margin-bottom: var(--space-4); text-align: center;">
+                                <div style="font-size: 0.75rem; margin-bottom: var(--space-2); opacity: 0.9;">Your Rewards Earned</div>
+                                <div style="font-size: 1.75rem; font-weight: 700; margin-bottom: var(--space-1);">₹180</div>
+                                <div style="font-size: 0.625rem; opacity: 0.9;">From 6 successful referrals</div>
+                            </div>
+                            
+                            <!-- Referral Code -->
+                            <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-900);">
+                                        <i class="fas fa-code"></i>
+                                        Your Referral Code
+                                    </div>
+                                    <button style="background: var(--primary); color: white; border: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; font-weight: 600;">
+                                        <i class="fas fa-copy"></i>
+                                        Copy
+                                    </button>
+                                </div>
+                                <div style="background: white; border: 2px dashed var(--primary); border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+                                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary); letter-spacing: 2px;">JOHN2024</div>
+                                    <div style="font-size: 0.5rem; color: var(--gray-600); margin-top: var(--space-1);">Share this code with friends</div>
+                                </div>
+                            </div>
+                            
+                            <!-- How It Works -->
+                            <div style="margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    <i class="fas fa-info-circle"></i>
+                                    How It Works
+                                </div>
+                                
+                                <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                                    <div style="display: flex; align-items: center; gap: var(--space-3);">
+                                        <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">1</div>
+                                        <div>
+                                            <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">Share your code</div>
+                                            <div style="font-size: 0.625rem; color: var(--gray-600);">Send your referral code to friends</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: var(--space-3);">
+                                        <div style="width: 32px; height: 32px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">2</div>
+                                        <div>
+                                            <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">Friend signs up</div>
+                                            <div style="font-size: 0.625rem; color: var(--gray-600);">They create account using your code</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: var(--space-3);">
+                                        <div style="width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">3</div>
+                                        <div>
+                                            <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">Both get rewards</div>
+                                            <div style="font-size: 0.625rem; color: var(--gray-600);">You both receive credits instantly</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Reward Structure -->
+                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--success);">
+                                    <i class="fas fa-gift"></i>
+                                    Reward Structure
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <span style="font-size: 0.625rem; color: var(--gray-700);">You get:</span>
+                                    <span style="font-size: 0.625rem; font-weight: 600; color: var(--success);">₹30 credits</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <span style="font-size: 0.625rem; color: var(--gray-700);">Your friend gets:</span>
+                                    <span style="font-size: 0.625rem; font-weight: 600; color: var(--success);">3 free sessions</span>
+                                </div>
+                                <div style="background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-md); padding: var(--space-2); margin-top: var(--space-2);">
+                                    <div style="font-size: 0.5rem; color: var(--gray-600); text-align: center;">
+                                        🎉 Bonus: Refer 10 friends and get 1 month Pro subscription FREE!
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Referrals -->
+                            <div style="margin-bottom: var(--space-4);">
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                                    <i class="fas fa-users"></i>
+                                    Recent Referrals (6 total)
+                                </div>
+                                
+                                <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-2); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                            <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                                <i class="fas fa-check"></i>
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 0.625rem; font-weight: 600;">Sarah M.</div>
+                                                <div style="font-size: 0.5rem; color: var(--gray-600);">Dec 14 • Active</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 0.625rem; font-weight: 600; color: var(--success);">+₹30</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-2); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                            <div style="width: 24px; height: 24px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                                <i class="fas fa-clock"></i>
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 0.625rem; font-weight: 600;">Mike R.</div>
+                                                <div style="font-size: 0.5rem; color: var(--gray-600);">Dec 12 • Pending</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 0.625rem; color: var(--secondary);">Pending</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-2); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                            <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                                <i class="fas fa-check"></i>
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 0.625rem; font-weight: 600;">Alex T.</div>
+                                                <div style="font-size: 0.5rem; color: var(--gray-600);">Dec 10 • Active</div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 0.625rem; font-weight: 600; color: var(--success);">+₹30</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="text-align: center; margin-top: var(--space-2);">
+                                    <button style="background: none; border: none; color: var(--primary); font-size: 0.625rem; text-decoration: underline; cursor: pointer;">
+                                        View All Referrals
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Share Buttons -->
+                            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                                <button class="button">
+                                    <i class="fas fa-share-alt"></i>
+                                    Invite Friends Now
+                                </button>
+                                
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: var(--space-3); font-size: 0.5rem; color: var(--gray-500);">
+                                Credits expire after 12 months. Terms & conditions apply.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screen-title">Referral System</div>
+                </div>
+            </div>
+        </body>
+        </html>
 
         <style>
             @keyframes bounce {
