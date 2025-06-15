@@ -1,0 +1,3645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linguviq App - Complete Flow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Single Blue Gradient Background */
+            --gradient-bg: linear-gradient(135deg, #102056 0%, #0e2955 100%);
+            --gradient-primary: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            --gradient-light: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+
+            /* Colors */
+            --primary: #2563EB;
+            --primary-light: #3B82F6;
+            --primary-dark: #1D4ED8;
+            --secondary: #F59E0B;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+
+            /* Neutrals */
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-floating: 0 20px 40px -8px rgba(0, 0, 0, 0.2);
+
+            /* Compact Spacing */
+            --space-1: 0.25rem;  /* 4px */
+            --space-2: 0.5rem;   /* 8px */
+            --space-3: 0.75rem;  /* 12px */
+            --space-4: 1rem;     /* 16px */
+            --space-5: 1.25rem;  /* 20px */
+            --space-6: 1.5rem;   /* 24px */
+
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-3xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            /* Effects */
+            --blur-sm: blur(4px);
+            --blur-md: blur(8px);
+            --blur-lg: blur(16px);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: white;
+            color: var(--gray-900);
+            line-height: 1.4;
+            padding: var(--space-5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: var(--space-6);
+            text-align: center;
+            letter-spacing: -0.025em;
+        }
+        
+        .screens-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-6);
+            max-width: 1400px;
+            width: 100%;
+        }
+        
+        .screen {
+            width: 280px;
+            height: 580px;
+            border-radius: var(--radius-3xl);
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            justify-self: center;
+            box-shadow: var(--shadow-floating);
+        }
+        
+        .screen:hover {
+            transform: translateY(-4px) scale(1.01);
+        }
+        
+        .screen-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: var(--gradient-bg);
+            position: relative;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3) var(--space-4) var(--space-2) var(--space-4);
+            font-size: 0.75rem;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 var(--space-4) var(--space-3) var(--space-4);
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            letter-spacing: -0.025em;
+        }
+        
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 0.75rem;
+            border-radius: var(--radius-lg);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: var(--blur-sm);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .floating-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: var(--blur-lg);
+            border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+            margin: var(--space-2) var(--space-3) 0 var(--space-3);
+            padding: var(--space-4);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .floating-card::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+            color: var(--gray-900);
+            letter-spacing: -0.025em;
+        }
+        
+        .page-subtitle {
+            font-size: 0.75rem;
+            margin-bottom: var(--space-4);
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+        
+        .button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-family: var(--font-family);
+            width: 100%;
+        }
+        
+        .button:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .button-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .button-secondary:hover {
+            background: var(--gray-50);
+        }
+        
+        .screen-title {
+            text-align: center;
+            margin-top: var(--space-2);
+            font-size: 0.625rem;
+            color: white;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Welcome Screen */
+        .welcome-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: white;
+            padding: var(--space-5);
+        }
+        
+        .welcome-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: var(--space-3);
+            border-radius: var(--radius-xl);
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+        
+        .welcome-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: var(--space-2);
+            letter-spacing: -0.025em;
+        }
+        
+        .welcome-subtitle {
+            font-size: 0.875rem;
+            margin-bottom: var(--space-6);
+            opacity: 0.9;
+            line-height: 1.5;
+            max-width: 220px;
+        }
+        
+        .welcome-buttons {
+            width: 100%;
+            max-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+        
+        /* Enhanced Home Screen */
+        .home-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: var(--space-4);
+            color: white;
+            text-align: center;
+        }
+        
+        .home-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .home-subtitle {
+            font-size: 0.75rem;
+            margin-bottom: var(--space-6);
+            opacity: 0.9;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+            width: 100%;
+            max-width: 240px;
+        }
+        
+        .action-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-xl);
+            padding: var(--space-4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .action-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: var(--space-2);
+        }
+        
+        .action-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--space-1);
+        }
+        
+        .action-description {
+            font-size: 0.625rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        /* One-on-One Room - Improved */
+        .room-hero {
+            text-align: center;
+            margin-bottom: var(--space-4);
+        }
+        
+        .room-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: var(--space-3);
+        }
+        
+        .matching-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-xl);
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+            text-align: center;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .matching-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--space-3);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .filter-section {
+            margin-bottom: var(--space-4);
+        }
+        
+        .filter-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+        
+        .filter-chip {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            padding: var(--space-2) var(--space-3);
+            font-size: 0.625rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-chip:hover,
+        .filter-chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Avatar Selection - Improved */
+        .avatar-section {
+            text-align: center;
+            margin-bottom: var(--space-4);
+        }
+        
+        .current-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-xl);
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin: 0 auto var(--space-3);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .current-avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        .avatar-edit {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.625rem;
+        }
+        
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-2);
+            margin-top: var(--space-3);
+        }
+        
+        .avatar-option {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            justify-self: center;
+        }
+        
+        .avatar-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .avatar-option.selected {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Chat Interface */
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding-bottom: var(--space-3);
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: var(--space-3);
+        }
+        
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-lg);
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .chat-info {
+            flex: 1;
+        }
+        
+        .chat-name {
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--gray-900);
+        }
+        
+        .chat-status {
+            font-size: 0.625rem;
+            color: var(--success);
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .chat-action {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-lg);
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--gray-600);
+            font-size: 0.75rem;
+        }
+        
+        .chat-action:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            max-width: 75%;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-lg);
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .message-received {
+            background: var(--gray-100);
+            align-self: flex-start;
+            border-bottom-left-radius: var(--radius-sm);
+        }
+        
+        .message-sent {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: var(--radius-sm);
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: var(--space-2);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            outline: none;
+        }
+        
+        .send-button {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: var(--space-4);
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--gray-900);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--space-3);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-lg);
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: var(--space-3);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-lg);
+            font-size: 0.75rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Friends List */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            padding: var(--space-2) var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+        
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.75rem;
+        }
+        
+        .search-bar i {
+            color: var(--gray-400);
+            font-size: 0.75rem;
+        }
+        
+        .friend-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-2);
+            transition: all 0.2s ease;
+        }
+        
+        .friend-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .friend-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-lg);
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .friend-info {
+            flex: 1;
+        }
+        
+        .friend-name {
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--gray-900);
+        }
+        
+        .friend-status {
+            font-size: 0.625rem;
+            color: var(--gray-600);
+        }
+        
+        .friend-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .friend-action {
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-md);
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--gray-600);
+            font-size: 0.625rem;
+        }
+        
+        .friend-action:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: var(--blur-md);
+            padding: var(--space-2) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.5rem;
+            color: var(--gray-500);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .tab i {
+            font-size: 0.875rem;
+            margin-bottom: var(--space-1);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+        }
+        
+        /* Video Call Interface */
+        .video-container {
+            background: var(--gray-900);
+            border-radius: var(--radius-xl);
+            height: 160px;
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            position: relative;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3);
+            margin: var(--space-4) 0;
+        }
+        
+        .video-control {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+        
+        .control-mute {
+            background: var(--gray-600);
+        }
+        
+        .control-end {
+            background: var(--error);
+        }
+        
+        .control-camera {
+            background: var(--gray-600);
+        }
+        
+        .video-control:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discussion Room */
+        .room-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+        
+        .room-card {
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-3);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .room-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .room-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2);
+        }
+        
+        .room-title {
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .room-time {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+            background: var(--gray-100);
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-md);
+        }
+        
+        .room-description {
+            font-size: 0.625rem;
+            color: var(--gray-600);
+            margin-bottom: var(--space-2);
+            line-height: 1.4;
+        }
+        
+        .room-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .room-participants {
+            font-size: 0.625rem;
+            color: var(--gray-500);
+        }
+        
+        .join-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: 0.625rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Audio Call */
+        .audio-container {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-xl);
+            height: 200px;
+            margin-bottom: var(--space-4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .audio-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: var(--space-2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .call-timer {
+            position: absolute;
+            top: var(--space-3);
+            right: var(--space-3);
+            background: rgba(0, 0, 0, 0.3);
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-md);
+            font-size: 0.625rem;
+        }
+
+        /* Onboarding Styles */
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option-item:hover {
+            border-color: var(--primary-light);
+        }
+        
+        .option-item.selected {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .option-radio {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .option-item.selected .option-radio {
+            border-color: var(--primary);
+        }
+        
+        .option-item.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+        
+        .option-text {
+            font-size: 0.75rem;
+            color: var(--gray-700);
+            line-height: 1.4;
+        }
+
+        /* Premium Blurred Content */
+        .premium-blur {
+            filter: blur(3px);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .premium-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(245, 158, 11, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+        }
+
+        /* Ice Breaker Popup - Smaller Size */
+        .icebreaker-popup {
+            position: absolute;
+            bottom: 80px;
+            left: var(--space-2);
+            right: var(--space-2);
+            background: white;
+            border: 2px solid var(--secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-3);
+            box-shadow: var(--shadow-floating);
+            z-index: 10;
+            max-height: 180px;
+        }
+
+        .icebreaker-popup-small {
+            bottom: 60px;
+            max-height: 140px;
+            padding: var(--space-2);
+        }
+
+        /* Timer Slider */
+        .timer-slider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: var(--radius-sm);
+            transition: width 5s linear;
+        }
+
+        .timer-slider.active {
+            width: 100%;
+        }
+
+        /* Friend Request Timer */
+        .friend-request-timer {
+            position: absolute;
+            top: var(--space-3);
+            right: var(--space-3);
+            background: var(--secondary);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-4);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--space-2);
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            font-size: 0.625rem;
+        }
+
+        .comparison-table th {
+            background: var(--gray-50);
+            font-weight: 600;
+        }
+
+        .comparison-table .check {
+            color: var(--success);
+        }
+
+        .comparison-table .cross {
+            color: var(--error);
+        }
+
+        /* Detailed Filters */
+        .filter-category {
+            margin-bottom: var(--space-4);
+        }
+
+        .filter-category-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .filter-subcategory {
+            margin-left: var(--space-3);
+            margin-bottom: var(--space-2);
+        }
+
+        .filter-subcategory-title {
+            font-size: 0.625rem;
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+            color: var(--gray-700);
+        }
+
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 0.625rem;
+            color: var(--gray-600);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>Linguviq - Connect & Learn Languages (Complete Flow)</h1>
+    
+    <div class="screens-container">
+        
+        <!-- 1. Welcome Screen with Logo -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="welcome-hero">
+                    <img src="https://raw.githubusercontent.com/fun-with-codinng/linguviq/refs/heads/main/linguviq-new.png" alt="Linguviq Logo" class="welcome-logo">
+                    <div class="welcome-title">Linguviq</div>
+                    <div class="welcome-subtitle">Connect with native speakers worldwide and master new languages through real conversations</div>
+                    
+                    <div class="welcome-buttons">
+                        <button class="button">
+                            <i class="fas fa-user-plus"></i>
+                            Create Account
+                        </button>
+                        <button class="button button-secondary">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Sign In
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Welcome Screen</div>
+        </div>
+
+        <!-- 2. Sign In Screen -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Sign In</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">Welcome Back</div>
+                    <div class="page-subtitle">Sign in to continue your language learning journey</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Enter your password">
+                    </div>
+                    
+                    <div style="text-align: right; margin-bottom: var(--space-4);">
+                        <span style="font-size: 0.625rem; color: var(--primary); cursor: pointer;">Forgot Password?</span>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+                    </button>
+                    
+                    <div style="text-align: center; margin: var(--space-4) 0;">
+                        <span style="font-size: 0.625rem; color: var(--gray-500);">or continue with</span>
+                    </div>
+                    
+                    <div style="display: flex; gap: var(--space-2);">
+                        <button class="button button-secondary" style="flex: 1;">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button class="button button-secondary" style="flex: 1;">
+                            <i class="fab fa-facebook"></i>
+                            Facebook
+                        </button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: var(--space-3); font-size: 0.625rem; color: var(--gray-600);">
+                        Don't have an account? <span style="color: var(--primary); cursor: pointer; font-weight: 600;">Sign Up</span>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Sign In</div>
+        </div>
+
+        <!-- 3. Sign Up Screen -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Sign Up</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">Create Your Account</div>
+                    <div class="page-subtitle">Join thousands of language learners worldwide</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Create a secure password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">I am a</label>
+                        <select class="form-select">
+                            <option>Select your status</option>
+                            <option>Student</option>
+                            <option>Working Professional</option>
+                            <option>Graduate Student</option>
+                            <option>Freelancer</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">College/University/Company</label>
+                        <input type="text" class="form-input" placeholder="Enter your institution or company">
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-user-plus"></i>
+                        Create Account
+                    </button>
+                    
+                    <div style="text-align: center; margin-top: var(--space-3); font-size: 0.625rem; color: var(--gray-600);">
+                        Already have an account? <span style="color: var(--primary); cursor: pointer; font-weight: 600;">Sign In</span>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Sign Up</div>
+        </div>
+
+        <!-- 4. Onboarding: Why Join Linguviq -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Complete Profile</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-2) var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="height: 4px; background: var(--gray-200); border-radius: var(--radius-sm);">
+                            <div style="width: 33%; height: 100%; background: var(--gradient-primary); border-radius: var(--radius-sm);"></div>
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600); margin-top: var(--space-1); text-align: center;">Step 1 of 3</div>
+                    </div>
+                    
+                    <div class="page-title">Why do you want to join Linguviq?</div>
+                    <div class="page-subtitle">Help us understand your goals so we can personalize your experience</div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4);">
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">To improve my speaking skills in a new language</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">To find a space to talk freely without judgment</div>
+                        </div>
+                        <div class="option-item selected">
+                            <div class="option-radio"></div>
+                            <div class="option-text">To prepare for job interviews</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">To explore different cultures and languages</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">To make international friends</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">To build confidence in speaking</div>
+                        </div>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-arrow-right"></i>
+                        Continue
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Onboarding: Goals</div>
+        </div>
+
+        <!-- 5. Onboarding: Current Proficiency -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Complete Profile</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-2) var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="height: 4px; background: var(--gray-200); border-radius: var(--radius-sm);">
+                            <div style="width: 66%; height: 100%; background: var(--gradient-primary); border-radius: var(--radius-sm);"></div>
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600); margin-top: var(--space-1); text-align: center;">Step 2 of 3</div>
+                    </div>
+                    
+                    <div class="page-title">What is your current proficiency in your target language?</div>
+                    <div class="page-subtitle">This helps us match you with suitable conversation partners</div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4);">
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">Beginner – I know a few words</div>
+                        </div>
+                        <div class="option-item selected">
+                            <div class="option-radio"></div>
+                            <div class="option-text">Intermediate – I can hold basic conversations</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">Advanced – I'm confident but want to improve fluency</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">Fluent – I'm almost native but want regular practice</div>
+                        </div>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-arrow-right"></i>
+                        Continue
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Onboarding: Proficiency</div>
+        </div>
+
+        <!-- 6. Onboarding: Previous Experience -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Complete Profile</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-2) var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="height: 4px; background: var(--gray-200); border-radius: var(--radius-sm);">
+                            <div style="width: 100%; height: 100%; background: var(--gradient-primary); border-radius: var(--radius-sm);"></div>
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600); margin-top: var(--space-1); text-align: center;">Step 3 of 3</div>
+                    </div>
+                    
+                    <div class="page-title">Have you used other language-learning platforms before?</div>
+                    <div class="page-subtitle">This helps us customize your experience based on your learning background</div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4);">
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">No, this is my first language learning app</div>
+                        </div>
+                        <div class="option-item selected">
+                            <div class="option-radio"></div>
+                            <div class="option-text">Yes, I've used apps like Duolingo, Babbel, etc.</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">Yes, I've tried conversation platforms before</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">I've taken formal language classes</div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-radio"></div>
+                            <div class="option-text">I have a mix of different learning experiences</div>
+                        </div>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-check"></i>
+                        Complete Setup
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Onboarding: Experience</div>
+        </div>
+
+        <!-- 7. Profile Screen -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <div class="logo">Profile</div>
+                    <button class="nav-button">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="text-align: center; margin-bottom: var(--space-4);">
+                        <div class="current-avatar" style="margin: 0 auto var(--space-2);">
+                            😊
+                        </div>
+                        <div style="font-size: 1rem; font-weight: 700; margin-bottom: var(--space-1);">John Smith</div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600);">Student at MIT • Learning Spanish</div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600);">🇺🇸 Boston, USA</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary);">47</div>
+                            <div style="font-size: 0.625rem; color: var(--gray-600);">Hours Practiced</div>
+                        </div>
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--success);">12</div>
+                            <div style="font-size: 0.625rem; color: var(--gray-600);">Friends Made</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                            <i class="fas fa-language"></i>
+                            Languages Learning
+                        </div>
+                        <div style="display: flex; gap: var(--space-2);">
+                            <div style="background: var(--primary); color: white; padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 0.625rem; font-weight: 600;">
+                                🇪🇸 Spanish - Intermediate
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                            <i class="fas fa-trophy"></i>
+                            Recent Achievements
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                            <div style="display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div style="width: 24px; height: 24px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; font-weight: 600;">7-Day Streak</div>
+                                    <div style="font-size: 0.5rem; color: var(--gray-600);">Practiced for 7 consecutive days</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem;">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.625rem; font-weight: 600;">Conversation Master</div>
+                                    <div style="font-size: 0.5rem; color: var(--gray-600);">Completed 10 one-on-one sessions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <button class="button button-secondary">
+                            <i class="fas fa-edit"></i>
+                            Edit Profile
+                        </button>
+                        <button class="button button-secondary">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </button>
+                        <button class="button button-secondary">
+                            <i class="fas fa-question-circle"></i>
+                            Help & Support
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="tab-bar">
+                    <div class="tab">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-search"></i>
+                        <span>Explore</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </div>
+                    <div class="tab active">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Profile</div>
+        </div>
+
+        <!-- 8. Edit Profile Screen -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Edit Profile</div>
+                    <button class="nav-button">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="avatar-section">
+                        <div class="current-avatar">
+                            😊
+                            <div class="avatar-edit">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-3);">Change Photo</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" value="John Smith">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Bio</label>
+                        <textarea class="form-input" style="min-height: 60px;" placeholder="Tell others about yourself...">Engineering student passionate about languages and technology. Love discussing travel, food, and cultural differences!</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-input" value="Boston, USA">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Languages I'm Learning</label>
+                        <select class="form-select">
+                            <option selected>🇪🇸 Spanish</option>
+                            <option>🇫🇷 French</option>
+                            <option>🇩🇪 German</option>
+                            <option>🇮🇹 Italian</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">My Level</label>
+                        <select class="form-select">
+                            <option>Beginner</option>
+                            <option selected>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Fluent</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Interests</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                            <div class="filter-chip active">Technology</div>
+                            <div class="filter-chip active">Travel</div>
+                            <div class="filter-chip">Music</div>
+                            <div class="filter-chip active">Food</div>
+                            <div class="filter-chip">Sports</div>
+                            <div class="filter-chip">Movies</div>
+                        </div>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-save"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Edit Profile</div>
+        </div>
+
+        <!-- 9. Home Screen - Ready to Practice -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <div class="logo">Linguviq</div>
+                    <button class="nav-button">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                </div>
+                
+                <div class="home-hero">
+                    <div class="home-title">Ready to Practice?</div>
+                    <div class="home-subtitle">Choose your learning adventure</div>
+                    
+                    <div class="action-buttons">
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="action-title">One-on-One Room</div>
+                            <div class="action-description">Practice with a language partner in private conversation</div>
+                        </div>
+                        
+                        <div class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="action-title">Discussion Room</div>
+                            <div class="action-description">Join group conversations on various topics</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-bar">
+                    <div class="tab active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-search"></i>
+                        <span>Explore</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Home Screen</div>
+        </div>
+
+        <!-- 10. Match Settings - Normal & Premium Filters -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Match Settings</div>
+                    <button class="nav-button">
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">Customize Your Matches</div>
+                    <div class="page-subtitle">Set your preferences to find the perfect conversation partner</div>
+                    
+                    <!-- Normal Filters Section -->
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.875rem; font-weight: 700; margin-bottom: var(--space-3); color: var(--primary);">
+                            <i class="fas fa-filter"></i>
+                            Basic Filters
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-title">
+                                <i class="fas fa-language"></i>
+                                Language Preference
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-chip active">🇪🇸 Spanish</div>
+                                <div class="filter-chip">🇫🇷 French</div>
+                                <div class="filter-chip">🇩🇪 German</div>
+                                <div class="filter-chip">🇮🇹 Italian</div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-title">
+                                <i class="fas fa-graduation-cap"></i>
+                                Skill Level
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-chip">Beginner</div>
+                                <div class="filter-chip active">Intermediate</div>
+                                <div class="filter-chip">Advanced</div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-title">
+                                <i class="fas fa-clock"></i>
+                                Session Duration
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-chip">15 min</div>
+                                <div class="filter-chip active">30 min</div>
+                                <div class="filter-chip">45 min</div>
+                                <div class="filter-chip">60 min</div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-title">
+                                <i class="fas fa-venus-mars"></i>
+                                Gender Preference
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-chip active">Any</div>
+                                <div class="filter-chip">Male</div>
+                                <div class="filter-chip">Female</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Premium Filters Section -->
+                    <div style="position: relative; margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.875rem; font-weight: 700; margin-bottom: var(--space-3); color: var(--secondary);">
+                            <i class="fas fa-crown"></i>
+                            Premium Filters
+                        </div>
+                        
+                        <!-- Blurred Premium Content -->
+                        <div class="premium-blur">
+                            <div class="filter-section">
+                                <div class="filter-title">
+                                    <i class="fas fa-calendar-day"></i>
+                                    Age Range
+                                </div>
+                                <div style="display: flex; gap: var(--space-2); align-items: center;">
+                                    <select class="form-select" style="flex: 1;">
+                                        <option>18</option>
+                                        <option>20</option>
+                                        <option>25</option>
+                                    </select>
+                                    <span>to</span>
+                                    <select class="form-select" style="flex: 1;">
+                                        <option>30</option>
+                                        <option>35</option>
+                                        <option>40</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-section">
+                                <div class="filter-title">
+                                    <i class="fas fa-briefcase"></i>
+                                    Professional Background
+                                </div>
+                                <div class="filter-options">
+                                    <div class="filter-chip">Student</div>
+                                    <div class="filter-chip">Technology</div>
+                                    <div class="filter-chip">Healthcare</div>
+                                    <div class="filter-chip">Business</div>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-section">
+                                <div class="filter-title">
+                                    <i class="fas fa-heart"></i>
+                                    Interests
+                                </div>
+                                <div class="filter-options">
+                                    <div class="filter-chip">Travel</div>
+                                    <div class="filter-chip">Music</div>
+                                    <div class="filter-chip">Sports</div>
+                                    <div class="filter-chip">Food</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Premium Overlay -->
+                        <div class="premium-overlay">
+                            <div style="text-align: center; background: white; padding: var(--space-3); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); max-width: 200px;">
+                                <div style="font-size: 1.25rem; margin-bottom: var(--space-1);">👑</div>
+                                <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">Premium Features</div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-2);">Advanced filters to find your perfect match</div>
+                                <button style="background: var(--secondary); color: white; border: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; font-weight: 600;">
+                                    Upgrade Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-search"></i>
+                        Find My Partner
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Match Settings</div>
+        </div>
+
+        <!-- 11. Detailed Premium Filters (Ecommerce Style) -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Advanced Filters</div>
+                    <button class="nav-button">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="background: var(--gradient-primary); color: white; border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4); text-align: center;">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">
+                            <i class="fas fa-crown"></i>
+                            Premium Plus Features
+                        </div>
+                        <div style="font-size: 0.625rem; opacity: 0.9;">Find your perfect language partner with detailed matching</div>
+                    </div>
+                    
+                    <!-- Demographics -->
+                    <div class="filter-category">
+                        <div class="filter-category-title">
+                            <span><i class="fas fa-users"></i> Demographics</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-subcategory">
+                            <div class="filter-subcategory-title">Age Range</div>
+                            <div style="display: flex; gap: var(--space-2); align-items: center; margin-bottom: var(--space-2);">
+                                <input type="range" min="18" max="65" value="25" style="flex: 1;">
+                                <span style="font-size: 0.625rem;">18-35</span>
+                            </div>
+                        </div>
+                        <div class="filter-subcategory">
+                            <div class="filter-subcategory-title">Gender</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Any</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Male</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Female</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Non-binary</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Education -->
+                    <div class="filter-category">
+                        <div class="filter-category-title">
+                            <span><i class="fas fa-graduation-cap"></i> Education</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-subcategory">
+                            <div class="filter-subcategory-title">Education Level</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>High School</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Bachelor's Degree</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Master's Degree</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>PhD</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-subcategory">
+                            <div class="filter-subcategory-title">Field of Study</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Computer Science</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Business</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Engineering</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Medicine</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Arts & Literature</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Professional -->
+                    <div class="filter-category">
+                        <div class="filter-category-title">
+                            <span><i class="fas fa-briefcase"></i> Professional</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-subcategory">
+                            <div class="filter-subcategory-title">Industry</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Technology</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Healthcare</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Finance</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Education</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Marketing</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-subcategory">
+                            <div class="filter-subcategory-title">Company Size</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Startup (1-50)</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Mid-size (51-500)</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Large (500+)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Interests & Hobbies -->
+                    <div class="filter-category">
+                        <div class="filter-category-title">
+                            <span><i class="fas fa-heart"></i> Interests</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-subcategory">
+                            <div class="filter-subcategory-title">Hobbies</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Travel</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Photography</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" checked>
+                                    <span>Cooking</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Music</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Sports</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox">
+                                    <span>Reading</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4);">
+                        <button class="button button-secondary" style="flex: 1;">
+                            <i class="fas fa-undo"></i>
+                            Reset
+                        </button>
+                        <button class="button" style="flex: 2;">
+                            <i class="fas fa-search"></i>
+                            Apply Filters (23 matches)
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Detailed Filters</div>
+        </div>
+
+        <!-- 12. One-on-One Matching Screen -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">One-on-One</div>
+                    <button class="nav-button">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="room-hero">
+                        <div class="room-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div class="page-title">Find Your Language Partner</div>
+                        <div class="page-subtitle">Get matched with native speakers for personalized practice</div>
+                    </div>
+                    
+                    <div class="matching-card">
+                        <div class="matching-spinner"></div>
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">Finding your perfect match...</div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600);">Based on your preferences and goals</div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-title">
+                            <i class="fas fa-language"></i>
+                            Language Preference
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-chip active">🇪🇸 Spanish</div>
+                            <div class="filter-chip">🇫🇷 French</div>
+                            <div class="filter-chip">🇩🇪 German</div>
+                            <div class="filter-chip">🇮🇹 Italian</div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-title">
+                            <i class="fas fa-graduation-cap"></i>
+                            Skill Level
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-chip">Beginner</div>
+                            <div class="filter-chip active">Intermediate</div>
+                            <div class="filter-chip">Advanced</div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-title">
+                            <i class="fas fa-clock"></i>
+                            Session Duration
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-chip">15 min</div>
+                            <div class="filter-chip active">30 min</div>
+                            <div class="filter-chip">45 min</div>
+                            <div class="filter-chip">60 min</div>
+                        </div>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-search"></i>
+                        Start Matching
+                    </button>
+                </div>
+                
+                <div class="tab-bar">
+                    <div class="tab">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </div>
+                    <div class="tab active">
+                        <i class="fas fa-search"></i>
+                        <span>Explore</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">One-on-One Room</div>
+        </div>
+
+        <!-- 13. Discussion Rooms -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Discussion Rooms</div>
+                    <button class="nav-button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">Active Discussions</div>
+                    <div class="page-subtitle">Join ongoing conversations or create your own room</div>
+                    
+                    <div class="room-list">
+                        <div class="room-card">
+                            <div class="room-header">
+                                <div class="room-title">
+                                    <i class="fas fa-plane"></i>
+                                    Travel Stories & Tips
+                                </div>
+                                <div class="room-time">12:45</div>
+                            </div>
+                            <div class="room-description">Share your favorite travel destinations and get recommendations from locals</div>
+                            <div class="room-footer">
+                                <div class="room-participants">
+                                    <i class="fas fa-users"></i>
+                                    6 participants • 🇬🇧 English
+                                </div>
+                                <button class="join-btn">Join</button>
+                            </div>
+                        </div>
+                        
+                        <div class="room-card">
+                            <div class="room-header">
+                                <div class="room-title">
+                                    <i class="fas fa-utensils"></i>
+                                    Cooking & Recipes
+                                </div>
+                                <div class="room-time">08:23</div>
+                            </div>
+                            <div class="room-description">Traditional dishes from around the world and cooking techniques</div>
+                            <div class="room-footer">
+                                <div class="room-participants">
+                                    <i class="fas fa-users"></i>
+                                    4 participants • 🇪🇸 Spanish
+                                </div>
+                                <button class="join-btn">Join</button>
+                            </div>
+                        </div>
+                        
+                        <div class="room-card">
+                            <div class="room-header">
+                                <div class="room-title">
+                                    <i class="fas fa-laptop-code"></i>
+                                    Tech & Innovation
+                                </div>
+                                <div class="room-time">15:12</div>
+                            </div>
+                            <div class="room-description">Latest in technology, AI, and digital transformation trends</div>
+                            <div class="room-footer">
+                                <div class="room-participants">
+                                    <i class="fas fa-users"></i>
+                                    8 participants • 🇫🇷 French
+                                </div>
+                                <button class="join-btn">Join</button>
+                            </div>
+                        </div>
+                        
+                        <div class="room-card">
+                            <div class="room-header">
+                                <div class="room-title">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Health & Fitness
+                                </div>
+                                <div class="room-time">05:38</div>
+                            </div>
+                            <div class="room-description">Workout routines, healthy recipes, and wellness tips</div>
+                            <div class="room-footer">
+                                <div class="room-participants">
+                                    <i class="fas fa-users"></i>
+                                    3 participants • 🇩🇪 German
+                                </div>
+                                <button class="join-btn">Join</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="button" style="margin-top: var(--space-3);">
+                        <i class="fas fa-plus"></i>
+                        Create New Room
+                    </button>
+                </div>
+                
+                <div class="tab-bar">
+                    <div class="tab">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </div>
+                    <div class="tab active">
+                        <i class="fas fa-search"></i>
+                        <span>Explore</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </div>
+                    <div class="tab">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Discussion Rooms</div>
+        </div>
+
+        <!-- 14. Video Call Interface -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Maria Santos</div>
+                    <button class="nav-button">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="video-container">
+                        <i class="fas fa-video"></i>
+                        <div style="position: absolute; bottom: var(--space-3); right: var(--space-3); background: rgba(0, 0, 0, 0.7); border-radius: var(--radius-lg); padding: var(--space-1) var(--space-2); font-size: 0.625rem;">
+                            15:42
+                        </div>
+                        <div style="position: absolute; top: var(--space-3); left: var(--space-3); background: rgba(0, 0, 0, 0.7); border-radius: var(--radius-lg); padding: var(--space-1) var(--space-2); font-size: 0.625rem;">
+                            🇪🇸 Spanish Practice
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-bottom: var(--space-3);">
+                        <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: var(--space-1);">Maria Santos</div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600);">Native Spanish Speaker • Madrid, Spain</div>
+                    </div>
+                    
+                    <div class="video-controls">
+                        <div class="video-control control-mute">
+                            <i class="fas fa-microphone-slash"></i>
+                        </div>
+                        <div class="video-control control-end">
+                            <i class="fas fa-phone-slash"></i>
+                        </div>
+                        <div class="video-control control-camera">
+                            <i class="fas fa-video-slash"></i>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-3);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2);">
+                            <i class="fas fa-lightbulb"></i>
+                            Today's Focus
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600); line-height: 1.4;">
+                            • Practice past tense conjugations<br>
+                            • Discuss weekend activities<br>
+                            • Learn 5 new vocabulary words
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: var(--space-2);">
+                        <button class="button button-secondary" style="flex: 1;">
+                            <i class="fas fa-comment"></i>
+                            Chat
+                        </button>
+                        <button class="button button-secondary" style="flex: 1;">
+                            <i class="fas fa-lightbulb"></i>
+                            Icebreaker
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Video Call</div>
+        </div>
+
+        <!-- 15. Audio Call Interface -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Carlos Rodriguez</div>
+                    <button class="nav-button">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="audio-container">
+                        <div class="call-timer">23:15</div>
+                        <div class="audio-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: var(--space-1);">Carlos Rodriguez</div>
+                        <div style="font-size: 0.625rem; opacity: 0.8;">Native Spanish Speaker</div>
+                        <div style="font-size: 0.625rem; opacity: 0.8;">🇪🇸 Barcelona, Spain</div>
+                    </div>
+                    
+                    <div class="video-controls">
+                        <div class="video-control control-mute">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <div class="video-control control-end">
+                            <i class="fas fa-phone-slash"></i>
+                        </div>
+                        <div class="video-control control-camera">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-3);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2);">
+                            <i class="fas fa-microphone"></i>
+                            Conversation Topics
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-1);">
+                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem;">Food & Culture</span>
+                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem;">Travel</span>
+                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem;">Daily Life</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: var(--space-2);">
+                        <button class="button button-secondary" style="flex: 1;">
+                            <i class="fas fa-comment"></i>
+                            Notes
+                        </button>
+                        <button class="button button-secondary" style="flex: 1;">
+                            <i class="fas fa-lightbulb"></i>
+                            Icebreaker
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Audio Call</div>
+        </div>
+
+        <!-- 16. Chat Interface -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Carlos Rodriguez</div>
+                    <button class="nav-button">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="chat-header">
+                        <div class="chat-avatar">CR</div>
+                        <div class="chat-info">
+                            <div class="chat-name">Carlos Rodriguez</div>
+                            <div class="chat-status">
+                                <i class="fas fa-circle" style="font-size: 0.375rem;"></i>
+                                Online • Native Spanish
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <div class="chat-action">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="chat-action">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <button style="width: 28px; height: 28px; border-radius: var(--radius-lg); background: var(--secondary); color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.75rem;">
+                                <i class="fas fa-lightbulb"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages">
+                        <div class="message message-received">
+                            ¡Hola! ¿Cómo estás hoy?
+                        </div>
+                        <div class="message message-sent">
+                            ¡Muy bien, gracias! Estoy practicando español.
+                        </div>
+                        <div class="message message-received">
+                            ¡Perfecto! ¿Qué te gustaría practicar hoy?
+                        </div>
+                        <div class="message message-sent">
+                            Me gustaría trabajar en mi pronunciación y aprender vocabulario nuevo.
+                        </div>
+                        <div class="message message-received">
+                            Excelente idea. ¿Qué tal si empezamos con palabras relacionadas con la comida?
+                        </div>
+                        <div class="message message-sent">
+                            ¡Perfecto! Me encanta cocinar.
+                        </div>
+                        <div class="message message-received">
+                            ¿Cuál es tu plato favorito?
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-2); margin-bottom: var(--space-3);">
+                        <div style="font-size: 0.625rem; font-weight: 600; margin-bottom: var(--space-1);">
+                            <i class="fas fa-magic"></i>
+                            Quick Phrases
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-1);">
+                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; cursor: pointer;">¿Podrías repetir?</span>
+                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; cursor: pointer;">No entiendo</span>
+                            <span style="background: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; cursor: pointer;">Perfecto</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <input type="text" placeholder="Type your message...">
+                        <button class="send-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Chat Interface</div>
+        </div>
+
+        <!-- 17. Ice Breaker Questions Overlay (Updated with Timer & Auto-disappear) -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="logo">Carlos Rodriguez</div>
+                    <button class="nav-button">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card" style="position: relative;">
+                    <!-- Chat Messages in Background -->
+                    <div class="chat-messages" style="opacity: 0.3;">
+                        <div class="message message-received">¡Hola! ¿Cómo has estado?</div>
+                        <div class="message message-sent">Todo bien, gracias.</div>
+                        <div class="message message-received">¿En qué trabajas exactamente?</div>
+                        <div class="message message-sent">Soy ingeniero de software.</div>
+                    </div>
+                    
+                    <!-- Small Ice Breaker Popup with Timer -->
+                    <div class="icebreaker-popup icebreaker-popup-small slide-up" style="position: relative;">
+                        <!-- Timer Slider -->
+                        <div class="timer-slider active" style="animation: width-countdown 5s linear forwards;"></div>
+                        
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                            <div style="font-size: 0.625rem; font-weight: 700; color: var(--secondary);">
+                                <i class="fas fa-lightbulb"></i>
+                                Conversation Starter
+                            </div>
+                            <button style="background: none; border: none; color: var(--gray-400); font-size: 0.625rem;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Question -->
+                        <div style="background: rgba(245, 158, 11, 0.1); border-radius: var(--radius-lg); padding: var(--space-2); margin-bottom: var(--space-2);">
+                            <div style="font-size: 0.625rem; font-weight: 600; margin-bottom: var(--space-1);">
+                                💼 Try asking Carlos:
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--gray-700); line-height: 1.4; font-style: italic;">
+                                "What's the most exciting project you're working on at your startup?"
+                            </div>
+                        </div>
+                        
+                        <!-- Actions (Removed "Used It") -->
+                        <div style="display: flex; gap: var(--space-2);">
+                            <button style="background: var(--secondary); color: white; border: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; font-weight: 600; flex: 1;">
+                                <i class="fas fa-paper-plane"></i> Send This
+                            </button>
+                            <button style="background: var(--gray-100); color: var(--gray-700); border: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; font-weight: 600;">
+                                <i class="fas fa-random"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="chat-input" style="opacity: 0.3;">
+                        <input type="text" placeholder="Type your message...">
+                        <button class="send-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Chat with Auto-Disappearing Icebreaker</div>
+        </div>
+
+        <!-- 18. Post-Call Rating & Friend Request -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <div class="logo">Session Complete</div>
+                    <div class="friend-request-timer">0:28</div>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="text-align: center; margin-bottom: var(--space-4);">
+                        <div style="width: 64px; height: 64px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin: 0 auto var(--space-2);">MS</div>
+                        <div class="page-title">How was your session with Maria?</div>
+                        <div class="page-subtitle">Rate your experience and connect as friends!</div>
+                    </div>
+                    
+                    <!-- Star Rating -->
+                    <div style="text-align: center; margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2);">Overall Rating</div>
+                        <div style="display: flex; justify-content: center; gap: var(--space-1); margin-bottom: var(--space-2);">
+                            <i class="fas fa-star" style="color: var(--secondary); font-size: 1.5rem;"></i>
+                            <i class="fas fa-star" style="color: var(--secondary); font-size: 1.5rem;"></i>
+                            <i class="fas fa-star" style="color: var(--secondary); font-size: 1.5rem;"></i>
+                            <i class="fas fa-star" style="color: var(--secondary); font-size: 1.5rem;"></i>
+                            <i class="fas fa-star" style="color: var(--secondary); font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600);">5.0 - Excellent!</div>
+                    </div>
+                    
+                    <!-- Quick Feedback -->
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2);">What did you like most?</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                            <div class="filter-chip active">Patient & Helpful</div>
+                            <div class="filter-chip active">Great Conversation</div>
+                            <div class="filter-chip">Good Pronunciation</div>
+                            <div class="filter-chip">Cultural Insights</div>
+                            <div class="filter-chip">Encouraging</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Friend Request Section -->
+                    <div style="background: rgba(37, 99, 235, 0.1); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4); text-align: center;">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--primary);">
+                            <i class="fas fa-user-plus"></i>
+                            Send Friend Request?
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Connect with Maria to practice together again! You have 30 seconds to send a request.
+                        </div>
+                        <button style="background: var(--primary); color: white; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 0.625rem; font-weight: 600;">
+                            <i class="fas fa-heart"></i>
+                            Send Friend Request
+                        </button>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <button class="button">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Feedback
+                        </button>
+                        <button class="button button-secondary">
+                            <i class="fas fa-times"></i>
+                            Skip for Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Post-Call Rating</div>
+        </div>
+
+        <!-- 19. Friend Match Success Screen -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+
+                <div style="background: var(--gradient-bg); height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: var(--space-5);">
+                    
+                    <!-- Success Animation -->
+                    <div style="font-size: 4rem; margin-bottom: var(--space-4); animation: bounce 1s ease-in-out;">
+                        🎉
+                    </div>
+                    
+                    <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: var(--space-2);">
+                        It's a Lingua-Link!
+                    </div>
+                    
+                    <div style="font-size: 0.875rem; margin-bottom: var(--space-4); opacity: 0.9; max-width: 240px;">
+                        You and Maria both sent friend requests! You're now conversation partners.
+                    </div>
+                    
+                    <!-- Friend Avatars -->
+                    <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="width: 48px; height: 48px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                            😊
+                        </div>
+                        <div style="font-size: 1.5rem;">
+                            💙
+                        </div>
+                        <div style="width: 48px; height: 48px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; font-weight: 700;">
+                            MS
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.1); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">
+                            🌟 What happens next?
+                        </div>
+                        <div style="font-size: 0.625rem; opacity: 0.9; line-height: 1.4;">
+                            • Message each other anytime<br>
+                            • Schedule future practice sessions<br>
+                            • Track your learning progress together
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-3); width: 100%; max-width: 200px;">
+                        <button style="background: white; color: var(--primary); border: none; padding: var(--space-3) var(--space-4); border-radius: var(--radius-full); font-weight: 600; font-size: 0.75rem;">
+                            <i class="fas fa-comment"></i>
+                             Message Maria
+                        </button>
+                        <button style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-full); font-weight: 600; font-size: 0.75rem;">
+                            <i class="fas fa-home"></i>
+                             Back to Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Lingua-Link Success!</div>
+        </div>
+
+        <!-- 20. App Settings -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Settings</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">App Settings</div>
+                    <div class="page-subtitle">Customize your Linguviq experience</div>
+                    
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-3); color: var(--gray-900);">
+                            <i class="fas fa-user-cog"></i>
+                            Account Settings
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div>
+                                    <div style="font-size: 0.75rem; font-weight: 600;">Edit Profile</div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-600);">Update your information</div>
+                                </div>
+                                <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.75rem;"></i>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div>
+                                    <div style="font-size: 0.75rem; font-weight: 600;">Privacy Settings</div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-600);">Control who can contact you</div>
+                                </div>
+                                <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.75rem;"></i>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div>
+                                    <div style="font-size: 0.75rem; font-weight: 600;">Language Preferences</div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-600);">Update learning languages</div>
+                                </div>
+                                <i class="fas fa-chevron-right" style="color: var(--gray-400); font-size: 0.75rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-3); color: var(--gray-900);">
+                            <i class="fas fa-bell"></i>
+                            Notifications
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div>
+                                    <div style="font-size: 0.75rem; font-weight: 600;">Push Notifications
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        </div>
+
+                    </div>
+
+                    </div>
+                    </div>
+
+
+                    <!-- Session History & Analytics -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Session History</div>
+                    <button class="nav-button">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">Your Learning Sessions</div>
+                    <div class="page-subtitle">Track your conversation history and progress</div>
+                    
+                    <!-- Stats Overview -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="background: var(--gradient-primary); color: white; border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+                            <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-1);">47</div>
+                            <div style="font-size: 0.625rem; opacity: 0.9;">Total Sessions</div>
+                        </div>
+                        <div style="background: var(--success); color: white; border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+                            <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-1);">156h</div>
+                            <div style="font-size: 0.625rem; opacity: 0.9;">Practice Time</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Sessions -->
+                    <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-3); color: var(--gray-900);">
+                        <i class="fas fa-history"></i>
+                        Recent Sessions
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                        <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-3);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                    <div style="width: 24px; height: 24px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem; font-weight: 600;">MS</div>
+                                    <div>
+                                        <div style="font-size: 0.75rem; font-weight: 600;">Maria Santos</div>
+                                        <div style="font-size: 0.625rem; color: var(--gray-600);">🇪🇸 Spanish Practice</div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.625rem; color: var(--gray-600);">Today</div>
+                                    <div style="font-size: 0.625rem; font-weight: 600; color: var(--success);">45 min</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-2);">
+                                Topics: Food vocabulary, Past tense practice
+                            </div>
+                            <div style="display: flex; gap: var(--space-2);">
+                                <div style="background: var(--success); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.5rem; font-weight: 600;">
+                                    ⭐ 4.8
+                                </div>
+                                <div style="background: var(--gray-100); color: var(--gray-700); padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.5rem; font-weight: 600;">
+                                    Video Call
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-3);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                    <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.625rem; font-weight: 600;">CR</div>
+                                    <div>
+                                        <div style="font-size: 0.75rem; font-weight: 600;">Carlos Rodriguez</div>
+                                        <div style="font-size: 0.625rem; color: var(--gray-600);">🇪🇸 Spanish Practice</div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.625rem; color: var(--gray-600);">Yesterday</div>
+                                    <div style="font-size: 0.625rem; font-weight: 600; color: var(--success);">30 min</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-2);">
+                                Topics: Business Spanish, Professional conversations
+                            </div>
+                            <div style="display: flex; gap: var(--space-2);">
+                                <div style="background: var(--success); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.5rem; font-weight: 600;">
+                                    ⭐ 5.0
+                                </div>
+                                <div style="background: var(--gray-100); color: var(--gray-700); padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.5rem; font-weight: 600;">
+                                    Audio Call
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="button" style="margin-top: var(--space-4);">
+                        <i class="fas fa-chart-line"></i>
+                        View Detailed Analytics
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Session History</div>
+        </div>
+
+        <!-- Learning Goals & Milestones -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Learning Goals</div>
+                    <button class="nav-button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">Your Learning Goals</div>
+                    <div class="page-subtitle">Set and track your language learning objectives</div>
+                    
+                    <!-- Current Goal -->
+                    <div style="background: var(--gradient-primary); color: white; border-radius: var(--radius-xl); padding: var(--space-4); margin-bottom: var(--space-4); text-align: center;">
+                        <div style="font-size: 0.75rem; margin-bottom: var(--space-1); opacity: 0.9;">Current Goal</div>
+                        <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-2);">Practice 5 Hours This Week</div>
+                        <div style="background: rgba(255, 255, 255, 0.2); border-radius: var(--radius-full); height: 8px; margin-bottom: var(--space-2);">
+                            <div style="width: 70%; height: 100%; background: white; border-radius: var(--radius-full);"></div>
+                        </div>
+                        <div style="font-size: 0.625rem; opacity: 0.9;">3.5h completed • 1.5h remaining</div>
+                    </div>
+                    
+                    <!-- Goal Categories -->
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                            <i class="fas fa-target"></i>
+                            Active Goals
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                            <!-- Weekly Practice Goal -->
+                            <div style="border: 1px solid var(--primary); border-radius: var(--radius-lg); padding: var(--space-3); background: rgba(37, 99, 235, 0.05);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--primary);">
+                                        <i class="fas fa-clock"></i>
+                                        Weekly Practice
+                                    </div>
+                                    <div style="font-size: 0.625rem; color: var(--primary); font-weight: 600;">70% Complete</div>
+                                </div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-2);">
+                                    Practice Spanish for 5 hours this week
+                                </div>
+                                <div style="background: var(--gray-200); border-radius: var(--radius-full); height: 6px;">
+                                    <div style="width: 70%; height: 100%; background: var(--primary); border-radius: var(--radius-full);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Vocabulary Goal -->
+                            <div style="border: 1px solid var(--secondary); border-radius: var(--radius-lg); padding: var(--space-3); background: rgba(245, 158, 11, 0.05);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--secondary);">
+                                        <i class="fas fa-book"></i>
+                                        Vocabulary Building
+                                    </div>
+                                    <div style="font-size: 0.625rem; color: var(--secondary); font-weight: 600;">45% Complete</div>
+                                </div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-2);">
+                                    Learn 100 new Spanish words this month
+                                </div>
+                                <div style="background: var(--gray-200); border-radius: var(--radius-full); height: 6px;">
+                                    <div style="width: 45%; height: 100%; background: var(--secondary); border-radius: var(--radius-full);"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Conversation Goal -->
+                            <div style="border: 1px solid var(--success); border-radius: var(--radius-lg); padding: var(--space-3); background: rgba(16, 185, 129, 0.05);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--success);">
+                                        <i class="fas fa-comments"></i>
+                                        Social Practice
+                                    </div>
+                                    <div style="font-size: 0.625rem; color: var(--success); font-weight: 600;">80% Complete</div>
+                                </div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600); margin-bottom: var(--space-2);">
+                                    Have 20 conversations this month
+                                </div>
+                                <div style="background: var(--gray-200); border-radius: var(--radius-full); height: 6px;">
+                                    <div style="width: 80%; height: 100%; background: var(--success); border-radius: var(--radius-full);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Suggested Goals -->
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                            <i class="fas fa-lightbulb"></i>
+                            Suggested Goals
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div>
+                                    <div style="font-size: 0.75rem; font-weight: 600;">Make 5 New Friends</div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-600);">Connect with Spanish speakers</div>
+                                </div>
+                                <button style="background: var(--primary); color: white; border: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; font-weight: 600;">
+                                    Add Goal
+                                </button>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                                <div>
+                                    <div style="font-size: 0.75rem; font-weight: 600;">15-Day Streak</div>
+                                    <div style="font-size: 0.625rem; color: var(--gray-600);">Practice daily for 2 weeks</div>
+                                </div>
+                                <button style="background: var(--primary); color: white; border: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.625rem; font-weight: 600;">
+                                    Add Goal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="button">
+                        <i class="fas fa-plus"></i>
+                        Create Custom Goal
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Learning Goals</div>
+        </div>
+
+        <!-- Friend Profile View -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Maria Santos</div>
+                    <button class="nav-button">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <!-- Profile Header -->
+                    <div style="text-align: center; margin-bottom: var(--space-4);">
+                        <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; margin: 0 auto var(--space-2);">
+                            MS
+                        </div>
+                        <div style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-1);">Maria Santos</div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600);">
+                            🇪🇸 Native Spanish Speaker • Madrid, Spain<br>
+                            💼 Marketing Manager • 📚 Learning English
+                        </div>
+                        
+                        <!-- Online Status -->
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-1); margin-top: var(--space-2);">
+                            <i class="fas fa-circle" style="color: var(--success); font-size: 0.375rem;"></i>
+                            <span style="font-size: 0.625rem; color: var(--success); font-weight: 600;">Online now</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-2); margin-bottom: var(--space-4);">
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-2); text-align: center;">
+                            <div style="font-size: 0.875rem; font-weight: 700; color: var(--primary);">156</div>
+                            <div style="font-size: 0.5rem; color: var(--gray-600);">Sessions</div>
+                        </div>
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-2); text-align: center;">
+                            <div style="font-size: 0.875rem; font-weight: 700; color: var(--success);">4.9</div>
+                            <div style="font-size: 0.5rem; color: var(--gray-600);">Rating</div>
+                        </div>
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-2); text-align: center;">
+                            <div style="font-size: 0.875rem; font-weight: 700; color: var(--secondary);">89</div>
+                            <div style="font-size: 0.5rem; color: var(--gray-600);">Friends</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bio -->
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                            <i class="fas fa-user"></i>
+                            About Maria
+                        </div>
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3);">
+                            <div style="font-size: 0.625rem; color: var(--gray-700); line-height: 1.4;">
+                                Marketing professional from Madrid who loves exploring different cultures through language exchange. I enjoy discussing travel, food, art, and business topics. Always excited to help others practice Spanish while improving my English skills!
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Interests -->
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                            <i class="fas fa-heart"></i>
+                            Interests
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                            <div style="background: var(--primary); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem;">Travel</div>
+                            <div style="background: var(--secondary); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem;">Food & Cooking</div>
+                            <div style="background: var(--success); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem;">Art & Museums</div>
+                            <div style="background: var(--gray-500); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem;">Business</div>
+                            <div style="background: var(--gray-400); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); font-size: 0.625rem;">Photography</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Session History -->
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                            <i class="fas fa-history"></i>
+                            Recent Sessions Together
+                        </div>
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-1);">
+                                <span style="font-size: 0.625rem; color: var(--gray-700);">Last session:</span>
+                                <span style="font-size: 0.625rem; font-weight: 600;">45 minutes • Today</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-1);">
+                                <span style="font-size: 0.625rem; color: var(--gray-700);">Total sessions:</span>
+                                <span style="font-size: 0.625rem; font-weight: 600;">8 sessions</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 0.625rem; color: var(--gray-700);">Your rating:</span>
+                                <div style="display: flex; align-items: center; gap: var(--space-1);">
+                                    <div style="display: flex; gap: 1px;">
+                                        <i class="fas fa-star" style="color: var(--secondary); font-size: 0.5rem;"></i>
+                                        <i class="fas fa-star" style="color: var(--secondary); font-size: 0.5rem;"></i>
+                                        <i class="fas fa-star" style="color: var(--secondary); font-size: 0.5rem;"></i>
+                                        <i class="fas fa-star" style="color: var(--secondary); font-size: 0.5rem;"></i>
+                                        <i class="fas fa-star" style="color: var(--secondary); font-size: 0.5rem;"></i>
+                                    </div>
+                                    <span style="font-size: 0.625rem; font-weight: 600;">5.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <button class="button">
+                            <i class="fas fa-comment"></i>
+                            Send Message
+                        </button>
+                        <div style="display: flex; gap: var(--space-2);">
+                            <button class="button button-secondary" style="flex: 1;">
+                                <i class="fas fa-phone"></i>
+                                Audio Call
+                            </button>
+                            <button class="button button-secondary" style="flex: 1;">
+                                <i class="fas fa-video"></i>
+                                Video Call
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Friend Profile</div>
+        </div>
+
+        <!-- Subscription Management -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">My Subscription</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <!-- Current Plan Status -->
+                    <div style="background: var(--gradient-primary); color: white; border-radius: var(--radius-xl); padding: var(--space-4); margin-bottom: var(--space-4); text-align: center;">
+                        <div style="font-size: 1.25rem; margin-bottom: var(--space-2);">👑</div>
+                        <div style="font-size: 0.875rem; font-weight: 700; margin-bottom: var(--space-1);">Linguviq Plus</div>
+                        <div style="font-size: 0.625rem; opacity: 0.9; margin-bottom: var(--space-2);">Active since Dec 15, 2024</div>
+                        <div style="font-size: 1rem; font-weight: 700;">₹295/month</div>
+                    </div>
+                    
+                    <!-- Usage Stats -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary);">18</div>
+                            <div style="font-size: 0.625rem; color: var(--gray-600);">Sessions This Month</div>
+                        </div>
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--success);">12h</div>
+                            <div style="font-size: 0.625rem; color: var(--gray-600);">Practice Time</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2);">
+                            <i class="fas fa-credit-card"></i>
+                            Billing Details
+                        </div>
+                        
+                        <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                <span style="font-size: 0.625rem; color: var(--gray-600);">Next billing date:</span>
+                                <span style="font-size: 0.625rem; font-weight: 600;">Jan 15, 2025</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                                <span style="font-size: 0.625rem; color: var(--gray-600);">Payment method:</span>
+                                <span style="font-size: 0.625rem; font-weight: 600;">UPI (••••@ybl)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 0.625rem; color: var(--gray-600);">Amount:</span>
+                                <span style="font-size: 0.625rem; font-weight: 600;">₹348 (incl. GST)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2);">
+                            <i class="fas fa-star"></i>
+                            Your Plus Benefits
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                <span>60-minute unlimited sessions</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                <span>Video calls after 25 minutes</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                <span>Advanced matching filters</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                <span>30 icebreaker questions</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <button class="button">
+                            <i class="fas fa-arrow-up"></i>
+                            Upgrade to Pro
+                        </button>
+                        <button class="button button-secondary">
+                            <i class="fas fa-edit"></i>
+                            Change Payment Method
+                        </button>
+                        <button class="button button-secondary">
+                            <i class="fas fa-pause"></i>
+                            Pause Subscription
+                        </button>
+                        <button class="button button-secondary" style="color: var(--error); border-color: var(--error);">
+                            <i class="fas fa-times"></i>
+                            Cancel Subscription
+                        </button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: var(--space-3); font-size: 0.5rem; color: var(--gray-500);">
+                        Need help? Contact our support team
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Subscription</div>
+        </div>
+
+        <!-- Upgrade Prompt -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="logo">Upgrade Now</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="floating-card">
+                    <div style="text-align: center; margin-bottom: var(--space-4);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-2);">🚀</div>
+                        <div class="page-title">You've Hit Your Daily Limit!</div>
+                        <div class="page-subtitle">Upgrade to continue practicing with unlimited sessions</div>
+                    </div>
+                    
+                    <!-- Current Limitation -->
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--error);"></i>
+                            <div style="font-size: 0.75rem; font-weight: 600; color: var(--error);">Free Plan Limit Reached</div>
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-700);">
+                            You've completed your 1 session for today. Come back tomorrow for another 30-minute session, or upgrade now for unlimited access.
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--gradient-primary); color: white; border-radius: var(--radius-xl); padding: var(--space-4); margin-bottom: var(--space-4);">
+                        <div style="font-size: 0.875rem; font-weight: 700; margin-bottom: var(--space-2);">
+                            <i class="fas fa-crown"></i>
+                            Upgrade to Plus & Get:
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: var(--space-1);">
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-infinity"></i>
+                                <span>Unlimited 60-minute sessions</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-video"></i>
+                                <span>Video calls after 25 minutes</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-users"></i>
+                                <span>Join/create group sessions</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2); font-size: 0.625rem;">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>30 icebreaker questions</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid var(--secondary); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4); text-align: center;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--secondary); margin-bottom: var(--space-1);">
+                            🔥 Limited Time Offer
+                        </div>
+                        <div style="font-size: 0.625rem; color: var(--gray-700); margin-bottom: var(--space-2);">
+                            Get 7 days free, then just ₹295/month
+                        </div>
+                        <div style="font-size: 0.5rem; color: var(--gray-500);">
+                            Cancel anytime • No commitment
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <button class="button">
+                            <i class="fas fa-crown"></i>
+                            Start 7-Day Free Trial
+                        </button>
+                        <button class="button button-secondary">
+                            <i class="fas fa-clock"></i>
+                            Wait Until Tomorrow
+                        </button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: var(--space-3); font-size: 0.5rem; color: var(--gray-500);">
+                        Join 50,000+ learners who upgraded to unlimited practice
+                    </div>
+                </div>
+            </div>
+            <div class="screen-title">Upgrade Prompt</div>
+        </div>
+
+        <!-- Billing History -->
+        <div class="screen">
+            <div class="screen-content">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                </div>
+                
+                <div class="header">
+                    <button class="nav-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="logo">Billing History</div>
+                    <button class="nav-button">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <div class="floating-card">
+                    <div class="page-title">Payment History</div>
+                    <div class="page-subtitle">View and download your payment receipts</div>
+                    
+                    <!-- Current Subscription Summary -->
+                    <div style="background: var(--gray-50); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                            <div style="font-size: 0.75rem; font-weight: 600;">Current Plan</div>
+                            <div style="background: var(--success); color: white; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.5rem; font-weight: 600;">
+                                ACTIVE
+                            </div>
+                        </div>
+                        <div style="font-size: 0.875rem; font-weight: 700; color: var(--primary);">Linguviq Plus</div>
+                        <div style="font-size: 0.625rem; color: var(--gray-600);">₹295/month • Next billing: Jan 15, 2025</div>
+                    </div>
+                    
+                    <!-- Payment History */
+                    <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-2); color: var(--gray-900);">
+                        <i class="fas fa-receipt"></i>
+                        Recent Payments
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <!-- Payment 1 -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                            <div>
+                                <div style="font-size: 0.75rem; font-weight: 600;">Dec 15, 2024</div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600);">Linguviq Plus - Monthly</div>
+                                <div style="font-size: 0.5rem; color: var(--gray-500);">UPI Payment</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--success);">₹348</div>
+                                <button style="background: none; border: none; color: var(--primary); font-size: 0.625rem; text-decoration: underline;">
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment 2 -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                            <div>
+                                <div style="font-size: 0.75rem; font-weight: 600;">Nov 15, 2024</div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600);">Linguviq Plus - Monthly</div>
+                                <div style="font-size: 0.5rem; color: var(--gray-500);">UPI Payment</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--success);">₹348</div>
+                                <button style="background: none; border: none; color: var(--primary); font-size: 0.625rem; text-decoration: underline;">
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment 3 -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
+                            <div>
+                                <div style="font-size: 0.75rem; font-weight: 600;">Oct 15, 2024</div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600);">Linguviq Plus - Monthly</div>
+                                <div style="font-size: 0.5rem; color: var(--gray-500);">UPI Payment</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--success);">₹348</div>
+                                <button style="background: none; border: none; color: var(--primary); font-size: 0.625rem; text-decoration: underline;">
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Failed Payment -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3); background: rgba(239, 68, 68, 0.05); border: 1px solid var(--error); border-radius: var(--radius-lg);">
+                            <div>
+                                <div style="font-size: 0.75rem; font-weight: 600;">Sep 15, 2024</div>
+                                <div style="font-size: 0.625rem; color: var(--gray-600);">Linguviq Plus - Monthly</div>
+                                <div style="font-size: 0.5rem; color: var(--error);">Payment Failed</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--error);">₹348</div>
+                                <button style="background: var(--error); color: white; border: none; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.5rem; font-weight: 600;">
+                                    Retry Payment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Summary -->
+                    <div style="background: var(--primary); color: white; border-radius: var(--radius-lg); padding: var(--space-3); margin-top: var(--space-4); text-align: center;">
+                        <div style="font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-1);">Total Spent</div>
+                        <div style="font-size: 1.25rem; font-weight: 700;">₹1,044</div>
+                        <div style="font-size: 0.5rem; opacity: 0.8;">Since joining Linguviq Plus</div>
+                    </div>
+                    
+                    <button class="button button-secondary" style="margin-top: var(--space-4);">
+                        <i class="fas fa-file-download"></i>
+                        Download All Receipts
+                    </button>
+                </div>
+            </div>
+            <div class="screen-title">Billing History</div>
+        </div>
+
+        <style>
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(-10px);
+                }
+                60% {
+                    transform: translateY(-5px);
+                }
+            }
+            
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+            </style>
+            
+                </div>
+            </body>
+            </html>
