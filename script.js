@@ -84,64 +84,53 @@ document.addEventListener('DOMContentLoaded', () => {
 // Form Handling
 waitlistForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
-    // Get form elements
-    const nameInput = waitlistForm.querySelector('input[type="text"]');
-    const emailInput = waitlistForm.querySelector('input[type="email"]');
-    const languageSelect = waitlistForm.querySelector('select');
+
+    // Get form data
+    const formData = new FormData(waitlistForm);
+    const email = formData.get('email').trim();
+    const name = formData.get('name').trim();
+    const language = formData.get('language');
+    const country = formData.get('country').trim();
+    const referral = formData.get('referral').trim();
+
     const submitButton = waitlistForm.querySelector('button[type="submit"]');
-    
-    // Get values
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const language = languageSelect.value;
-    
+
     // Basic validation
-    if (!name) {
-        showError('Please enter your name');
-        nameInput.focus();
-        return;
-    }
-    
     if (!email) {
         showError('Please enter your email address');
-        emailInput.focus();
+        waitlistForm.querySelector('input[name="email"]').focus();
         return;
     }
-    
+
     if (!isValidEmail(email)) {
         showError('Please enter a valid email address');
-        emailInput.focus();
+        waitlistForm.querySelector('input[name="email"]').focus();
         return;
     }
-    
-    if (!language) {
-        showError('Please select your target language');
-        languageSelect.focus();
-        return;
-    }
-    
+
     // Clear any previous errors
     clearErrors();
-    
+
     // Simulate form submission
     const originalText = submitButton.innerHTML;
-    
+
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Joining...';
     submitButton.disabled = true;
-    
+
     // Simulate API call
     setTimeout(() => {
-        showSuccessMessage(name, email, language);
+        showSuccessMessage(name || 'Friend', email, language);
         submitButton.innerHTML = originalText;
         submitButton.disabled = false;
         waitlistForm.reset();
-        
+
         // Track successful submission
         trackEvent('waitlist_submitted', {
-            name: name,
             email: email,
-            language: language
+            name: name,
+            language: language,
+            country: country,
+            hasReferral: !!referral
         });
     }, 2000);
 });
@@ -186,20 +175,23 @@ function clearErrors() {
 function showSuccessMessage(name, email, language) {
     const modalBody = document.querySelector('.modal-body');
     const originalContent = modalBody.innerHTML;
-    
+
+    const languageText = language ? `<p>Interested in learning: <strong>${language.charAt(0).toUpperCase() + language.slice(1)}</strong></p>` : '';
+
     modalBody.innerHTML = `
         <div class="success-message text-center">
             <div class="success-icon">🎉</div>
             <h3>Welcome to Linguviq!</h3>
             <p>Thank you, ${name}! You've been added to our waitlist.</p>
             <p>We'll notify you at <strong>${email}</strong> when we launch.</p>
-            <p>Target language: <strong>${language}</strong></p>
+            ${languageText}
             <div class="success-benefits">
                 <h4>What's next?</h4>
                 <ul>
+                    <li>🎁 3 free sessions when you join</li>
                     <li>📧 Early access notification</li>
-                    <li>🎁 Exclusive launch benefits</li>
-                    <li>📱 App preview access</li>
+                    <li>⭐ Exclusive launch benefits</li>
+                    <li>📱 Priority onboarding support</li>
                 </ul>
             </div>
             <button class="primary-button" onclick="closeModal()">
@@ -208,7 +200,7 @@ function showSuccessMessage(name, email, language) {
             </button>
         </div>
     `;
-    
+
     // Reset modal content after closing
     modal.addEventListener('click', function resetModal() {
         if (event.target === modal) {
@@ -471,6 +463,97 @@ document.addEventListener('DOMContentLoaded', () => {
             trackEvent('feature_card_clicked', {
                 feature: featureName
             });
+        });
+    });
+});
+
+// Pricing Toggle Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const billingOptions = document.querySelectorAll('.billing-option');
+
+    billingOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // Remove active class from all options
+            billingOptions.forEach(opt => opt.classList.remove('active'));
+
+            // Add active class to clicked option
+            option.classList.add('active');
+
+            // Get selected period
+            const period = option.getAttribute('data-period');
+
+            // Update prices
+            const priceAmounts = document.querySelectorAll('.pricing-card .amount');
+            const pricePeriods = document.querySelectorAll('.pricing-card .period');
+            const priceNotes = document.querySelectorAll('.price-note');
+
+            priceAmounts.forEach(amount => {
+                if (amount.hasAttribute('data-' + period)) {
+                    amount.textContent = amount.getAttribute('data-' + period);
+                }
+            });
+
+            pricePeriods.forEach(periodElem => {
+                if (periodElem.hasAttribute('data-' + period)) {
+                    periodElem.textContent = periodElem.getAttribute('data-' + period);
+                }
+            });
+
+            // Show/hide appropriate price notes
+            priceNotes.forEach(note => {
+                if (note.classList.contains(period + '-note')) {
+                    note.style.display = 'block';
+                } else if (!note.classList.contains('price-note')) {
+                    note.style.display = 'none';
+                } else if (note.classList.contains('monthly-note') ||
+                          note.classList.contains('session-note') ||
+                          note.classList.contains('daily-note') ||
+                          note.classList.contains('weekly-note')) {
+                    note.style.display = 'none';
+                }
+            });
+
+            // Update button text for monthly plan
+            const featuredButton = document.querySelector('.pricing-card.featured .pricing-button');
+            if (period === 'monthly' && featuredButton) {
+                featuredButton.innerHTML = '<i class="fas fa-rocket"></i> Start 7-Day Free Trial';
+            } else if (featuredButton) {
+                featuredButton.innerHTML = '<i class="fas fa-rocket"></i> Choose Plus';
+            }
+
+            trackEvent('billing_period_changed', { period: period });
+        });
+    });
+});
+
+// FAQ Accordion Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+
+        question.addEventListener('click', () => {
+            // Toggle active class
+            const isActive = item.classList.contains('active');
+
+            // Close all other items (optional: remove these lines if you want multiple items open)
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+
+            // Toggle current item
+            if (isActive) {
+                item.classList.remove('active');
+            } else {
+                item.classList.add('active');
+
+                trackEvent('faq_opened', {
+                    question: question.querySelector('h4').textContent
+                });
+            }
         });
     });
 });
