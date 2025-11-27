@@ -47,6 +47,23 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    const navbar = document.querySelector('.navbar');
+    if (navMenu.classList.contains('active') && !navbar.contains(e.target)) {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+    }
+});
+
+// Close mobile menu on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+    }
+});
+
 // Smooth Scrolling for Navigation Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -323,15 +340,29 @@ style.textContent = `
     .nav-menu.active {
         display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 70px;
         left: 0;
         right: 0;
-        background: rgba(255, 255, 255, 0.98);
+        background: rgba(16, 32, 86, 0.98);
         backdrop-filter: blur(10px);
-        border-top: 1px solid #e5e7eb;
-        padding: 1rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.5rem 1rem;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+        gap: 0.5rem;
+    }
+
+    .nav-menu.active .nav-link {
+        color: rgba(255, 255, 255, 0.9);
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-menu.active .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
     }
     
     .nav-toggle.active span:nth-child(1) {
@@ -394,20 +425,6 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
-
-// Apply debouncing to scroll events
-const debouncedScrollHandler = debounce(() => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
-}, 10);
-
-window.addEventListener('scroll', debouncedScrollHandler);
 
 // Add loading state to body
 document.addEventListener('DOMContentLoaded', () => {
@@ -557,7 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Service Worker registration (for future PWA features)
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
             .then(registration => {
